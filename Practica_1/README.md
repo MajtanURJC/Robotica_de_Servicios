@@ -28,3 +28,5 @@ exit
 docker cp vibrant_satoshi:/resources/exercises/vacuum_cleaner_loc/images/mapgrannyannie.png .
 xdg-open mapgrannyannie.png
 ```
+
+Y de este modo consguimos descargar la imagen.
