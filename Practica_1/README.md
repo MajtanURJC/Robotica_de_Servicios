@@ -14,3 +14,4 @@ Conocer la posición en la que está el robot y elegirla como posición de inici
 
 <img width="379" height="61" alt="imagen" src="https://github.com/user-attachments/assets/d8dceb85-07d0-48d5-9ab7-f466983bebeb" />
 
+Pero al probarlo no funciona, ya que HAL te lo devuelve en metros por lo que al final hay que descargar la imagen y ponerle los pixeles, de todos modos se ve a simple vista ya que no pueden salir pixeles negativos.
