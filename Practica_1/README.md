@@ -10,4 +10,4 @@ Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path,
 
 <img width="576" height="88" alt="imagen" src="https://github.com/user-attachments/assets/bd5b77b0-811a-495f-aa80-ebc181683600" />
 
-Conocer la posición en la que está el robot y elegirla como posición de inicio.
+Conocer la posición en la que está el robot y elegirla como posición de inicio, que en este caso nos ha dado [-1,1.5]
