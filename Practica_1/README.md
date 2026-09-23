@@ -52,3 +52,4 @@ VIDEO BFS Y MOVIMIENTO
 
 Ahora toca definir el movimiento para ello tenemos que sacar en cada iteración la posición y el angulo del robot y la posición de la celda a la que deseamos ir, con eso, consguimos el angulo hacia la celda y la distancia, y mediante un PID sencillo implementamos el movimiento.
 
+En el movimiento vuelvo a tener el problema de los pixeles y los metro, asi que tengo que buscar el factor de cuantos pixeles hay en un metro.
