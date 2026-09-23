@@ -35,4 +35,4 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
-Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [650,530]
+Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [650,550]
