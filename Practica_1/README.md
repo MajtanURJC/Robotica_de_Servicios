@@ -17,6 +17,7 @@ Conocer la posición en la que está el robot y elegirla como posición de inici
 Pero al probarlo no funciona, ya que HAL te lo devuelve en metros por lo que al final hay que descargar la imagen y ponerle los pixeles, de todos modos se ve a simple vista ya que no pueden salir pixeles negativos.
 
 Lo más dificil fue descargar la imagen, que lo hice de este modo:
+
 ```bash
 docker ps
 docker exec -it vibrant_satoshi bash
@@ -35,4 +36,17 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
-Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [650,550]
+Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [650,550].
+
+Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver:
+
+https://github.com/user-attachments/assets/7c35ab73-9078-4416-bdb6-5801c644b889
+
+Ya una vez funcionando el algoritmo de espiral ponemos los puntos de retorno, para vamos añadiendo en una lista todos los puntos de retorno, los puntos de retorno que defino son todos los 4 vecinos de cada punto al que avanzo, de modo que cada punto nuevo va añadiendo 3 puntos de retorno, ya que solo permito coger puntos de retorno en celdillas libres y cada vez que avanzo a una nueva celdilla compruebo si esta es un punto de retorno y si es un punto de retorno la elimino de la lista, es importante aclarar que permito al robot avanzar tanto a puntos de retorno como a celdillas libres. Probandolo sin capacidad de volver a una celda de retorno funciona asi:
+
+https://github.com/user-attachments/assets/19d84eb1-29c9-4e33-ba83-29e0e5190fa0
+
+Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar con nada, para ello usare el algoritmo que usabamos para el laser que es el BFS, que va explorando en todas las direcciónes hasta que encuentra o una celdilla de retorno que entonces se mueve a esa o una celdilla ocupada que entonces desiste de esa dirección y se sigue expandiendo en otras direcciónes, probandolo queda de este modo:
+
+https://github.com/user-attachments/assets/d631fd00-9f9e-48ff-8fb1-e2e0985e83de
+
