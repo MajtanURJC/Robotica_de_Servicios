@@ -50,4 +50,5 @@ Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar 
 
 VIDEO BFS Y MOVIMIENTO
 
+Ahora toca definir el movimiento para ello tenemos que sacar en cada iteración la posición y el angulo del robot y la posición de la celda a la que deseamos ir, con eso, consguimos el angulo hacia la celda y la distancia, y mediante un PID sencillo implementamos el movimiento.
 
