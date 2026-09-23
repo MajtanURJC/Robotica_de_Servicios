@@ -48,5 +48,7 @@ https://github.com/user-attachments/assets/19d84eb1-29c9-4e33-ba83-29e0e5190fa0
 
 Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar con nada, para ello usare el algoritmo que usabamos para el laser que es el BFS, que va explorando en todas las direcciónes hasta que encuentra o una celdilla de retorno que entonces se mueve a esa o una celdilla ocupada que entonces desiste de esa dirección y se sigue expandiendo en otras direcciónes, probandolo queda de este modo:
 
-https://github.com/user-attachments/assets/d631fd00-9f9e-48ff-8fb1-e2e0985e83de
+https://github.com/user-attachments/assets/2b927290-1dd8-469c-bf0e-7a8217f8fd92
+
+
 
