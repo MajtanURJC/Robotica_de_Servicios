@@ -40,7 +40,7 @@ Y comparando con la imagen de unibotics donde esta el robot deducimos que esta e
 
 Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver:
 
-https://github.com/user-attachments/assets/7c35ab73-9078-4416-bdb6-5801c644b889
+VIDEO EXPANSION
 
 Ya una vez funcionando el algoritmo de espiral ponemos los puntos de retorno, para vamos añadiendo en una lista todos los puntos de retorno, los puntos de retorno que defino son todos los 4 vecinos de cada punto al que avanzo, de modo que cada punto nuevo va añadiendo 3 puntos de retorno, ya que solo permito coger puntos de retorno en celdillas libres y cada vez que avanzo a una nueva celdilla compruebo si esta es un punto de retorno y si es un punto de retorno la elimino de la lista, es importante aclarar que permito al robot avanzar tanto a puntos de retorno como a celdillas libres. Probandolo sin capacidad de volver a una celda de retorno funciona asi:
 
