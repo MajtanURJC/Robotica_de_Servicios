@@ -36,15 +36,18 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
-Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [635,530].
+Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [635,530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relacion entre ellos, que para coger puntos solo es mover el robot y coger el HAL, y después en GIMP es mirar el punto en el que esta, si que es verdad que el robot en la imagen está algo desplazado hacia arriba a la izquierda, por lo que mediante muchas, MUCHAS pruebas vemos que la mejor matriz de trasnformación es esta:
 
-Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver:
+T = np.array([
+    [-101, 0, 0.0, 580],
+    [0, 101, 0, 425],
+    [0.0, 0.0, 1.0, 0.0],
+    [0.0, 0.0, 0.0, 1.0]
+])
 
-VIDEO EXPANSION
+Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver.
 
 Ya una vez funcionando el algoritmo de espiral ponemos los puntos de retorno, para vamos añadiendo en una lista todos los puntos de retorno, los puntos de retorno que defino son todos los 4 vecinos de cada punto al que avanzo, de modo que cada punto nuevo va añadiendo 3 puntos de retorno, ya que solo permito coger puntos de retorno en celdillas libres y cada vez que avanzo a una nueva celdilla compruebo si esta es un punto de retorno y si es un punto de retorno la elimino de la lista y la pinto como visitada, es importante aclarar que permito al robot avanzar tanto a puntos de retorno como a celdillas libres. Probandolo sin capacidad de volver a una celda de retorno funciona asi:
-
-VIDEO MOVIMIENTO
 
 Ahora he pensado como coger el camino para ir a la celda de retorno seleccionada, para eso cojo todos los puntos expandidos para llegar a la celda de retorno más cercana, el modo de expandir es como un laser, llego al obstaculo, y cuando llega al obstaculo y si en ninguna de las direcciones de los hay celdilla de retorno y chocan contra obstaculos, lo que hago es que se expandan hacia los lados hasta que encuentre una celdilla de retorno, una vez encontrado el punto de retorno he ido guardando todos los puntos expandidos, lo que hago es darle la vuelta y la añado al camino para así poder tener el camino hasta el punto de retorno.
 
