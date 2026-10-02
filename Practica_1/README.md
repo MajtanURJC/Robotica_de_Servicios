@@ -38,14 +38,14 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [635,530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relacion entre ellos, que para coger puntos solo es mover el robot y coger el HAL, y después en GIMP es mirar el punto en el que esta, si que es verdad que el robot en la imagen está algo desplazado hacia arriba a la izquierda, por lo que mediante muchas, MUCHAS pruebas vemos que la mejor matriz de trasnformación es esta:
 
-"""
+``` 
 T = np.array([
     [-101,    0,   0.0, 580],
     [   0,  101,   0.0, 425],
     [ 0.0,  0.0,   1.0,   0.0],
     [ 0.0,  0.0,   0.0,   1.0]
 ])
-"""
+```
 
 Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver.
 
