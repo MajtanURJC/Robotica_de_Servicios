@@ -36,7 +36,12 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
-Y comparando con la imagen de unibotics donde esta el robot deducimos que esta en el [635,530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relacion entre ellos, que para coger puntos solo es mover el robot y coger el HAL, y después en GIMP es mirar el punto en el que esta, si que es verdad que el robot en la imagen está algo desplazado hacia arriba a la izquierda, por lo que mediante muchas, MUCHAS pruebas vemos que la mejor matriz de trasnformación es esta:
+Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen.
+
+Durante este proceso nos encontramos con un problema, ya que los sistemas de coordenadas que utilizaban HAL y la imagen eran muy diferentes, tanto en el origen como en el sentido de los ejes. Por ello, no bastaba con hacer una simple conversión directa entre coordenadas, sino que era necesario tener en cuenta el cambio de orientación de los ejes y la traslación.
+
+Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, vemos que la mejor matriz de transformación es:
+
 
 ``` 
 T = np.array([
@@ -47,7 +52,9 @@ T = np.array([
 ])
 ```
 
-Una vez con el punto implemento el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, E, S, O, y guardo la dirección actual y lo pruebo para ver.
+Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles he visto que la mejor relación que he conseguido hayar es de 101 pixeles por metro.
+
+Una vez con el con todo el registro implementado desarrollo el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, O, S, E, y guardo la dirección actual y lo pruebo para ver viendo que me hace una pequeña espiral pero se queda encierrado en el punto crítico.
 
 Ya una vez funcionando el algoritmo de espiral ponemos los puntos de retorno, para vamos añadiendo en una lista todos los puntos de retorno, los puntos de retorno que defino son todos los 4 vecinos de cada punto al que avanzo, de modo que cada punto nuevo va añadiendo 3 puntos de retorno, ya que solo permito coger puntos de retorno en celdillas libres y cada vez que avanzo a una nueva celdilla compruebo si esta es un punto de retorno y si es un punto de retorno la elimino de la lista y la pinto como visitada, es importante aclarar que permito al robot avanzar tanto a puntos de retorno como a celdillas libres. Probandolo sin capacidad de volver a una celda de retorno funciona asi:
 
@@ -57,9 +64,5 @@ Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar 
 
 VIDEO BFS Y MOVIMIENTO
 
-Ahora toca definir el movimiento para ello tenemos que sacar en cada iteración la posición y el angulo del robot y la posición de la celda a la que deseamos ir, con eso, consguimos el angulo hacia la celda y la distancia, y mediante un PID sencillo implementamos el movimiento.
 
-En el movimiento vuelvo a tener el problema de los pixeles y los metro, asi que tengo que buscar el factor de cuantos pixeles hay en un metro.
-
-Otro problema con el que me he encontrado es que hay diferentes origenes de coordenadas, ya que el origen de coordenadas del HAL está en el centro de la imagen, mientras que en pixeles está arriba a la izquierda, por lo que tengo que unificar los origenes de coordenadas.
 
