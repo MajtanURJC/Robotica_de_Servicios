@@ -62,7 +62,7 @@ Ahora he pensado como coger el camino para ir a la celda de retorno seleccionada
 
 Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar con nada, para ello usare el algoritmo que usabamos para el laser que es el BFS, que va explorando en todas las direcciónes hasta que encuentra o una celdilla de retorno que entonces se mueve a esa o una celdilla ocupada que entonces desiste de esa dirección y se sigue expandiendo en otras direcciónes, probandolo queda de este modo:
 
-VIDEO BFS Y MOVIMIENTO
+https://youtu.be/WdyD_zK2MoU
 
 
 
