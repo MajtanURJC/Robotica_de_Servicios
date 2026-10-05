@@ -67,7 +67,8 @@ https://github.com/user-attachments/assets/d81692e6-a112-4f5a-806e-dc7bddc11487
 
 Como podemos ver en el video expande todas las celdas y por eso vemos que va pegado por la pared.
 
-Entonces ya teniendo solucionado tanto el registro como la planificación nos toca el movimiento, para ello
+Entonces ya teniendo solucionado tanto el registro como la planificación nos toca el movimiento, para utilizamos el angulo del robot y tenemos que hayar el ángulo a la celdilla que queremos ir y mediante comparación de angulos y con un poco de rango de fallo, hacemos que coincidan, una vez que coinciden los angulos le damos velocidad v comparando en todo momento la posición y el angulo, una vez que llega a la posición sacamos la siguiente celdilla de la lista del camino y volvemos a comparar angulo y distancia hasta llegar a la siguiente celdilla, así con todas las celdillas hasta llegar al final.
+
 https://youtu.be/WdyD_zK2MoU
 
 
