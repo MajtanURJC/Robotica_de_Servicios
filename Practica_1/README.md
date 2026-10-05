@@ -67,8 +67,6 @@ https://github.com/user-attachments/assets/d81692e6-a112-4f5a-806e-dc7bddc11487
 
 Como podemos ver en el video expande todas las celdas y por eso vemos que va pegado por la pared.
 
-Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar con nada, para ello usare el algoritmo que usabamos para el laser que es el BFS, que va explorando en todas las direcciónes hasta que encuentra o una celdilla de retorno que entonces se mueve a esa o una celdilla ocupada que entonces desiste de esa dirección y se sigue expandiendo en otras direcciónes, probandolo queda de este modo:
-
 https://youtu.be/WdyD_zK2MoU
 
 
