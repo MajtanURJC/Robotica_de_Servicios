@@ -38,7 +38,10 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen.
 
-Durante este proceso nos encontramos con un problema, ya que los sistemas de coordenadas que utilizaban HAL y la imagen eran muy diferentes, tanto en el origen como en el sentido de los ejes. Por ello, no bastaba con hacer una simple conversión directa entre coordenadas, sino que era necesario tener en cuenta el cambio de orientación de los ejes y la traslación.
+Durante este proceso nos encontramos con un problema, ya que los sistemas de coordenadas que utilizaban HAL y la imagen eran muy diferentes, tanto en el origen como en el sentido de los ejes. Por ello, no bastaba con hacer una simple conversión directa entre coordenadas, sino que era necesario tener en cuenta el cambio de orientación de los ejes y la traslación. La transformación sigue la sigueinte forma:
+
+<img width="181" height="270" alt="imagen" src="https://github.com/user-attachments/assets/81225866-0d7a-4214-b4c4-9d48afa2ba2b" />
+
 
 Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, vemos que la mejor matriz de transformación es:
 
@@ -52,7 +55,7 @@ T = np.array([
 ])
 ```
 
-Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles he visto que la mejor relación que he conseguido hayar es de 101 pixeles por metro.
+Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hayar es de 101 pixeles por metro.
 
 Una vez con el con todo el registro implementado desarrollo el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, O, S, E, y guardo la dirección actual y lo pruebo para ver viendo que me hace una pequeña espiral pero se queda encierrado en el punto crítico.
 
