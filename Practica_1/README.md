@@ -49,7 +49,6 @@ Y comparando con la imagen de Unibotics donde está el robot, deducimos que su p
 (-2.250,  2.929) -> [809, 729]
 ( 0.190, -0.249) -> [561, 408]
 ( 4.581, -2.298) -> [119, 187]
-
 ```
 
 Durante este proceso nos encontramos con un problema, ya que los sistemas de coordenadas que utilizaban HAL y la imagen eran muy diferentes, tanto en el origen como en el sentido de los ejes. Por ello, no bastaba con hacer una simple conversión directa entre coordenadas, sino que era necesario tener en cuenta el cambio de orientación de los ejes y la traslación. La transformación sigue la sigueinte forma:
