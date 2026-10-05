@@ -36,12 +36,25 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
-Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen.
+Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen, algunos puntos que he cogido son:
+
+```
+(-1.000,  1.500) -> [635, 535]
+( 2.422,  2.647) -> [335, 696]
+( 3.449,  5.174) -> [229, 947]
+(-0.956,  5.374) -> [676, 960]
+( 3.871,  2.728) -> [189, 699]
+( 3.220, -0.334) -> [256, 379]
+(-3.643,  0.286) -> [939, 453]
+(-2.250,  2.929) -> [809, 729]
+( 0.190, -0.249) -> [561, 408]
+( 4.581, -2.298) -> [119, 187]
+
+```
 
 Durante este proceso nos encontramos con un problema, ya que los sistemas de coordenadas que utilizaban HAL y la imagen eran muy diferentes, tanto en el origen como en el sentido de los ejes. Por ello, no bastaba con hacer una simple conversión directa entre coordenadas, sino que era necesario tener en cuenta el cambio de orientación de los ejes y la traslación. La transformación sigue la sigueinte forma:
 
 <img width="181" height="270" alt="imagen" src="https://github.com/user-attachments/assets/81225866-0d7a-4214-b4c4-9d48afa2ba2b" />
-
 
 Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, vemos que la mejor matriz de transformación es:
 
@@ -54,8 +67,20 @@ T = np.array([
     [ 0.0,  0.0,   0.0,   1.0]
 ])
 ```
+Este offset ha salido de las ecuaciones con los puntos hallados:
 
-Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hayar es de 101 pixeles por metro.
+``` 
+tx = xp - a * xm
+ty = yp - b * ym
+```
+Y tras muchos valores diferentes vemos una media más o menos en 580 y 425 que sale de estos valores:
+
+``` 
+tx = [582.000, 579.622, 577.049, 579.444, 579.971, 581.220, 570.857, 581.750, 580.190, 581.681]
+ty = [385, 432.219, 429.992, 423.592, 427.038, 413.300, 424.680, 436.737, 433.715, 417.664]
+```
+
+Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hallar es de 101 pixeles por metro.
 
 Una vez con el con todo el registro implementado desarrollo el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, O, S, E, y guardo la dirección actual y lo pruebo para ver viendo que me hace una pequeña espiral pero se queda encierrado en el punto crítico.
 
@@ -67,7 +92,15 @@ https://github.com/user-attachments/assets/d81692e6-a112-4f5a-806e-dc7bddc11487
 
 Como podemos ver en el video expande todas las celdas y por eso vemos que va pegado por la pared.
 
-Entonces ya teniendo solucionado tanto el registro como la planificación nos toca el movimiento, para utilizamos el angulo del robot y tenemos que hayar el ángulo a la celdilla que queremos ir y mediante comparación de angulos y con un poco de rango de fallo, hacemos que coincidan, una vez que coinciden los angulos le damos velocidad v comparando en todo momento la posición y el angulo, una vez que llega a la posición sacamos la siguiente celdilla de la lista del camino y volvemos a comparar angulo y distancia hasta llegar a la siguiente celdilla, así con todas las celdillas hasta llegar al final.
+Entonces ya teniendo solucionado tanto el registro como la planificación nos toca el movimiento, para utilizamos el angulo del robot y tenemos que hallar el ángulo a la celdilla que queremos ir y mediante comparación de angulos y con un poco de rango de fallo, hacemos que coincidan, una vez que coinciden los angulos le damos velocidad v comparando en todo momento la posición y el angulo, una vez que llega a la posición sacamos la siguiente celdilla de la lista del camino y volvemos a comparar angulo y distancia hasta llegar a la siguiente celdilla, así con todas las celdillas hasta llegar al final.
+
+Después para poder girar el robot de manera correcta y sin pasarme y estar recalculando todo el rato he añadido un controlador P que cuanto más cerca está del ángulo objetivo más lento gira hasta llegar dentro del margen de 0.1 para empezar a avanzar en linea recta, meto un margen tan pequeño para evitar que choque porque tenga un angulo demasiado diferente al objetivo.
+
+A su vez, para que no haga micromovimientos para llegar al centro de la celda le meto un cierto margen a la posición para que asi cuando este cerca de la posición podamos marcarla como visitada y pasar a la siguiente.
+
+Una vez terminadas las fases de registro, planificación y movimiento tenemos el ejercicio completo.
+
+Demuestro el video del funcionamiento del robot haciendo la ruta completa aquí:
 
 https://youtu.be/WdyD_zK2MoU
 
