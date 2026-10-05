@@ -66,6 +66,7 @@ Ahora he pensado como coger el camino para ir a la celda de retorno seleccionada
 
 https://github.com/user-attachments/assets/d81692e6-a112-4f5a-806e-dc7bddc11487
 
+Como podemos ver en el video se expande hacia todas las direcciones, y una vez que choca con pared cambia de dirección siempre intentando ir hacia el objetivo.
 
 Ahora tengo que permitir que vaya a la celda de retorno más cercana sin chocar con nada, para ello usare el algoritmo que usabamos para el laser que es el BFS, que va explorando en todas las direcciónes hasta que encuentra o una celdilla de retorno que entonces se mueve a esa o una celdilla ocupada que entonces desiste de esa dirección y se sigue expandiendo en otras direcciónes, probandolo queda de este modo:
 
