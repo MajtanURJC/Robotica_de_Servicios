@@ -1,10 +1,14 @@
 # PRACTICA 1 : LOCALIZED VACUUM CLEANER
 
-Para empezar, dividimos el mapa en pequeñas celdas de un tamaño parecido al del robot. Para crear estas celdas, recorremos el mapa de izquierda a derecha y de arriba a abajo, separándolo en cuadrados del tamaño que hemos elegido.
+La primera fase es el registro.
 
-Después, miramos cada celda para comprobar si tiene obstáculos. Usamos un umbral del 2%: si una celda tiene un 2% o más de píxeles negros, la consideramos como un obstáculo. Si tiene menos, la dejamos como una zona libre.
+Para empezar, dividimos el mapa en pequeñas celdas de un tamaño parecido al del robot pero un poco menor, yo he elegido 30. Para crear estas celdas, recorremos el mapa de izquierda a derecha y de arriba a abajo, separándolo en cuadrados del tamaño que hemos elegido.
+
+Después, miramos cada celda para comprobar si tiene obstáculos. Usamos un umbral del 2%: si una celda tiene un 2% o más de píxeles negros, la consideramos como un obstáculo. Si tiene menos, la dejamos como una zona libre que va a ser recorrida por el robot.
 
 Así conseguimos dividir el mapa en zonas por las que el robot puede pasar y zonas que debe evitar. Además, mostramos las celdas solo en las zonas libres para poder ver claramente cómo queda dividido el espacio.
+
+
 
 Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path, para ello tenía dos opciones, la primera que se me ocurrio fue utilizar una aplicación de edición de imagenes para sacar los pixeles de comienzo, pero me he dado cuenta que la propia plataforma nos da la posición del robot, así que he decidio que mediante las herramientas que nos da la propia plataforma que son:
 
