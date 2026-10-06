@@ -58,8 +58,7 @@ Durante este proceso nos encontramos con un problema, ya que los sistemas de coo
 
 <img width="181" height="270" alt="imagen" src="https://github.com/user-attachments/assets/81225866-0d7a-4214-b4c4-9d48afa2ba2b" />
 
-Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, vemos que la mejor matriz de transformación es:
-
+Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, ya que he tenido que cambiar los pixeles de cada metro ya que al estar un poco arriba a la izquierda he tenido que forzar algunos puntos para que no salgan valores muy diferentes y que concuerde con lo hayado anteriormente, vemos que la mejor matriz de transformación es:
 
 ``` 
 T = np.array([
