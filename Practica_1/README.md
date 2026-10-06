@@ -14,6 +14,7 @@ Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path,
 
 <img width="576" height="88" alt="imagen" src="https://github.com/user-attachments/assets/bd5b77b0-811a-495f-aa80-ebc181683600" />
 
+Y esas funciones nos devuelven lo siguiente en la posición inicial:
 
 <img width="379" height="61" alt="imagen" src="https://github.com/user-attachments/assets/d8dceb85-07d0-48d5-9ab7-f466983bebeb" />
 
