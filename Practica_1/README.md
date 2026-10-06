@@ -10,17 +10,14 @@ Así conseguimos dividir el mapa en zonas por las que el robot puede pasar y zon
 
 <img width="393" height="270" alt="Captura desde 2026-10-06 09-50-22" src="https://github.com/user-attachments/assets/a709eaad-c9cd-4ae3-a992-26a12af36277" />
 
-Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path, para ello tenía dos opciones, la primera que se me ocurrio fue utilizar una aplicación de edición de imagenes para sacar los pixeles de comienzo, pero me he dado cuenta que la propia plataforma nos da la posición del robot, así que he decidio que mediante las herramientas que nos da la propia plataforma que son:
+Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path, para ello tenía dos opciones, la primera que se me ocurrio fue utilizar la posición que devuelve el robot con las herraminetas que nos da la plataforma que son:
 
 <img width="576" height="88" alt="imagen" src="https://github.com/user-attachments/assets/bd5b77b0-811a-495f-aa80-ebc181683600" />
 
-Conocer la posición en la que está el robot y elegirla como posición de inicio, que en este caso nos ha dado [-1,1.5]
-
 <img width="379" height="61" alt="imagen" src="https://github.com/user-attachments/assets/d8dceb85-07d0-48d5-9ab7-f466983bebeb" />
 
-Pero al probarlo no funciona, ya que HAL te lo devuelve en metros por lo que al final hay que descargar la imagen y ponerle los pixeles, de todos modos se ve a simple vista ya que no pueden salir pixeles negativos.
+Pero nos damos cuenta que el HAL nos devuelve la posición en metros y la necesitamos en pixeles, por lo que tuvimos que pasar a la siguiente opcion, que es descargar la imagen que creía que era mucho más sencillo pero todo lo contrario, tuve que buscar la imagen dentro del docker y  descargarla del siguiente modo:
 
-Lo más dificil fue descargar la imagen, que lo hice de este modo:
 
 ```bash
 docker ps
