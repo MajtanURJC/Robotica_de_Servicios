@@ -8,7 +8,7 @@ Después, miramos cada celda para comprobar si tiene obstáculos. Usamos un umbr
 
 Así conseguimos dividir el mapa en zonas por las que el robot puede pasar y zonas que debe evitar. Además, mostramos las celdas solo en las zonas libres para poder ver claramente cómo queda dividido el espacio.
 
-
+<img width="393" height="270" alt="Captura desde 2026-10-06 09-50-22" src="https://github.com/user-attachments/assets/a709eaad-c9cd-4ae3-a992-26a12af36277" />
 
 Lo siguiente que hemos hecho ha sido decidir la ubicación de comienzo del path, para ello tenía dos opciones, la primera que se me ocurrio fue utilizar una aplicación de edición de imagenes para sacar los pixeles de comienzo, pero me he dado cuenta que la propia plataforma nos da la posición del robot, así que he decidio que mediante las herramientas que nos da la propia plataforma que son:
 
