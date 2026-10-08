@@ -1,6 +1,8 @@
-# PRACTICA 1 : LOCALIZED VACUUM CLEANER
+# PRÁCTICA 1: LOCALIZED VACUUM CLEANER
 
 En la practica he desarrollado tres fases, el registro, la planificación y el movimiento. La primera fase es el registro.
+
+## REGISTRO
 
 Para empezar, dividimos el mapa en pequeñas celdas de un tamaño parecido al del robot pero un poco menor, yo he elegido 30. Para crear estas celdas, recorremos el mapa de izquierda a derecha y de arriba a abajo, separándolo en cuadrados del tamaño que hemos elegido.
 
@@ -18,8 +20,7 @@ Y esas funciones nos devuelven lo siguiente en la posición inicial:
 
 <img width="379" height="61" alt="imagen" src="https://github.com/user-attachments/assets/d8dceb85-07d0-48d5-9ab7-f466983bebeb" />
 
-Pero nos damos cuenta que el HAL nos devuelve la posición en metros y la necesitamos en pixeles, por lo que tuvimos que pasar a la siguiente opcion, que es descargar la imagen que creía que era mucho más sencillo pero todo lo contrario, tuve que buscar la imagen dentro del docker y  descargarla del siguiente modo:
-
+Pero nos damos cuenta que el HAL nos devuelve la posición en metros y la necesitamos en pixeles, por lo que tuvimos que pasar a la siguiente opcion, que es descargar la imagen que creía que era mucho más sencillo pero todo lo contrario, tuve que buscar la imagen dentro del docker y descargarla del siguiente modo:
 
 ```bash
 docker ps
@@ -43,7 +44,7 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen, algunos puntos que he cogido son:
 
-```
+```text
 (-1.000,  1.500) -> [635, 535]
 ( 2.422,  2.647) -> [335, 696]
 ( 3.449,  5.174) -> [229, 947]
@@ -62,7 +63,7 @@ Durante este proceso nos encontramos con un problema, ya que los sistemas de coo
 
 Además, es verdad que el robot en la imagen aparece algo desplazado hacia arriba y hacia la izquierda respecto a la posición que obteníamos inicialmente. Por ello, mediante muchas, MUCHAS pruebas con diferentes puntos y ajustes, ya que he tenido que cambiar los pixeles de cada metro ya que al estar un poco arriba a la izquierda he tenido que forzar algunos puntos para que no salgan valores muy diferentes y que concuerde con lo hayado anteriormente, vemos que la mejor matriz de transformación es:
 
-``` 
+```text
 T = np.array([
     [-101,    0,   0.0, 580],
     [   0,  101,   0.0, 425],
@@ -70,20 +71,24 @@ T = np.array([
     [ 0.0,  0.0,   0.0,   1.0]
 ])
 ```
+
 Este offset ha salido de las ecuaciones con los puntos hallados:
 
-``` 
+```text
 tx = xp - a * xm
 ty = yp - b * ym
 ```
+
 Y tras muchos valores diferentes vemos una media más o menos en 580 y 425 que sale de estos valores:
 
-``` 
+```text
 tx = [582.000, 579.622, 577.049, 579.444, 579.971, 581.220, 570.857, 581.750, 580.190, 581.681]
 ty = [385, 432.219, 429.992, 423.592, 427.038, 413.300, 424.680, 436.737, 433.715, 417.664]
 ```
 
 Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hallar es de 101 pixeles por metro.
+
+## PLANIFICACIÓN
 
 Una vez terminado el registrlo paso a desarrollar el algoritmo para recorrer el path, para ello primero defino las direcciones privilegiadas de modo N, O, S, E, y guardo la dirección actual y lo pruebo para ver viendo que me hace una pequeña espiral pero se queda encierrado en el punto crítico.
 
@@ -97,6 +102,8 @@ https://github.com/user-attachments/assets/d81692e6-a112-4f5a-806e-dc7bddc11487
 
 Como podemos ver en el video expande todas las celdas y por eso vemos que va pegado por la pared.
 
+## MOVIMIENTO
+
 Entonces ya teniendo solucionado tanto el registro como la planificación nos toca el movimiento, para utilizamos el angulo del robot y tenemos que hallar el ángulo a la celdilla que queremos ir y mediante comparación de angulos y con un poco de rango de fallo, hacemos que coincidan, una vez que coinciden los angulos le damos velocidad v comparando en todo momento la posición y el angulo, una vez que llega a la posición sacamos la siguiente celdilla de la lista del camino y volvemos a comparar angulo y distancia hasta llegar a la siguiente celdilla, así con todas las celdillas hasta llegar al final.
 
 Después para poder girar el robot de manera correcta y sin pasarme y estar recalculando todo el rato he añadido un controlador P que cuanto más cerca está del ángulo objetivo más lento gira hasta llegar dentro del margen de 0.1 para empezar a avanzar en linea recta, meto un margen tan pequeño para evitar que choque porque tenga un angulo demasiado diferente al objetivo.
@@ -108,6 +115,5 @@ Una vez terminadas las fases de registro, planificación y movimiento tenemos el
 Demuestro el video del funcionamiento del robot haciendo la ruta completa aquí:
 
 https://youtu.be/WdyD_zK2MoU
-
 
 
