@@ -39,6 +39,8 @@ Ahora abrimos la imagen en gimp para sacar el pixel en el que empieza el robot:
 
 <img width="814" height="480" alt="imagen" src="https://github.com/user-attachments/assets/c937489c-ee73-471b-a8ce-46a2c882752a" />
 
+(ACLARACIÓN: Después me di cuenta que se podía hacer simplemente "GUARDAR COMO" sobre la imagen y sacarla pero no se me ocurrio)
+
 Y comparando con la imagen de Unibotics donde está el robot, deducimos que su posición en la imagen es aproximadamente [635, 530]. Para conseguir hacer el registro, cogemos más puntos y vemos la relación entre ellos. Para obtener estos puntos, simplemente movemos el robot a diferentes posiciones y obtenemos sus coordenadas mediante HAL, y después, en GIMP, miramos el punto correspondiente en el que se encuentra el robot en la imagen, algunos puntos que he cogido son:
 
 ```
