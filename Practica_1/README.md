@@ -86,7 +86,7 @@ tx = [582.000, 579.622, 577.049, 579.444, 579.971, 581.220, 570.857, 581.750, 58
 ty = [385, 432.219, 429.992, 423.592, 427.038, 413.300, 424.680, 436.737, 433.715, 417.664]
 ```
 
-Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hallar es de 101 pixeles por metro, es por ello que la matriz aparece 101 y -101
+Otra de las cosas más dificiles es ver cuantos pixeles hay por metro, que gracias a las diferentes mediciones de pixeles y comparaciones entre HAL y pixeles con la imágen descargada he visto que la mejor relación que he conseguido hallar es de 101 pixeles por metro, es por ello que la matriz aparece 101 y -101.
 
 ## PLANIFICACIÓN
 
