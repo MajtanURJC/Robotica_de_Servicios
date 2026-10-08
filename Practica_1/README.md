@@ -112,9 +112,7 @@ A su vez, para que no haga micromovimientos para llegar al centro de la celda le
 
 Por último he añadido un algoritmo VFF sencillo porque el mapa está un poco desfasado en algunos lugares y para evitar que se choque he añadido una fuerza repulsiva y atractiva que modifican el angulo, siendo la atractiva hacia la siguiente celdilla en el camino y repulsiva si hay una pared a una distancia menor que D_REP que yo he ajustado a 0.3 por lo que solamente cuando tengamos una pared muy cerca entrara el VFF ya que solo me interesa para situaciones críticas donde el choque vaya a ser inminente.
 
-Una vez terminadas las fases de registro, planificación y movimiento tenemos el ejercicio completo.
-
-Demuestro el video del funcionamiento del robot haciendo la ruta completa aquí:
+Una vez terminadas las fases de registro, planificación y movimiento tenemos el ejercicio completo. Demuestro el video del funcionamiento del robot haciendo la ruta completa aquí:
 
 https://youtu.be/WdyD_zK2MoU
 
