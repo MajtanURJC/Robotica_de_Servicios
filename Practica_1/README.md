@@ -1,8 +1,6 @@
 # PRACTICA 1 : LOCALIZED VACUUM CLEANER
 
-En la practica he desarrollado tres fases, el registro, la planificación y el movimiento.
-
-La primera fase es el registro.
+En la practica he desarrollado tres fases, el registro, la planificación y el movimiento. La primera fase es el registro.
 
 Para empezar, dividimos el mapa en pequeñas celdas de un tamaño parecido al del robot pero un poco menor, yo he elegido 30. Para crear estas celdas, recorremos el mapa de izquierda a derecha y de arriba a abajo, separándolo en cuadrados del tamaño que hemos elegido.
 
