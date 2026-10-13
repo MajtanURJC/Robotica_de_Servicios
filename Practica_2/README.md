@@ -79,3 +79,7 @@ La implementación consiste en hacer que el dron recorra una trayectoria en espi
 La búsqueda continúa mientras el dron avanza por la trayectoria, combinando el movimiento con la detección de supervivientes. De esta manera, no se limita a observar una única zona, sino que inspecciona diferentes partes del área de búsqueda de forma ordenada.
 
 La ventaja del algoritmo en espiral es que permite ampliar poco a poco la zona inspeccionada sin necesidad de movimientos aleatorios. Para asegurar una cobertura completa, es necesario que la separación entre las trayectorias tenga en cuenta el campo de visión de la cámara, por ello, aprovechando la geomnetría hecha anteriormente he cuadrado que la distancia entre trayectorias sea de 5 metros consiguiendo así que no haya zonas sin detectar.
+
+## VIDEO DEL FUNCIONAMIENTO
+
+https://youtu.be/laQWJkZ0fRg
