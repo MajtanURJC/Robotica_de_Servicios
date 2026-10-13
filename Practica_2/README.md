@@ -69,3 +69,13 @@ Esto es necesario porque una misma cara puede detectarse varias veces al analiza
 Además, para evitar contar varias veces a una misma persona, se establece una distancia mínima de 5 metros entre las posiciones registradas. Si se detecta una cara a menos de esa distancia de otra persona ya registrada, se considera que corresponde al mismo individuo y se descarta.
 
 Este umbral se relaciona con la geometría de la cámara: como el dron vuela a 5 metros de altura, la imagen ventral proyecta una superficie del terreno cuya extensión depende del campo de visión. Por ello, una misma persona puede aparecer en imágenes capturadas desde distintas posiciones del dron. El margen de 5 metros permite agrupar detecciones próximas y reducir los duplicados, aunque puede hacer que dos personas distintas que estén muy cerca se contabilicen como una sola.
+
+## ALGORITMO PARA CUBRIR EL TERRENO: ESPIRAL
+
+Cuando el dron llega a la zona donde se encuentran los supervivientes, comienza una búsqueda sistemática mediante un algoritmo de exploración en espiral. El objetivo es cubrir progresivamente el área de búsqueda, desplazándose por distintas posiciones para aumentar las posibilidades de detectar a todas las personas.
+
+La implementación consiste en hacer que el dron recorra una trayectoria en espiral, ampliando progresivamente el área explorada desde el punto inicial. Durante el recorrido, utiliza la cámara ventral para capturar imágenes del terreno y ejecutar el algoritmo de detección de caras. Cada vez que detecta una persona, registra su posición para evitar contabilizarla de nuevo si aparece en otra imagen.
+
+La búsqueda continúa mientras el dron avanza por la trayectoria, combinando el movimiento con la detección de supervivientes. De esta manera, no se limita a observar una única zona, sino que inspecciona diferentes partes del área de búsqueda de forma ordenada.
+
+La ventaja del algoritmo en espiral es que permite ampliar gradualmente la zona inspeccionada y organizar el recorrido sin depender de movimientos aleatorios. No obstante, para garantizar una cobertura completa, es necesario que la separación entre las trayectorias tenga en cuenta el campo de visión de la cámara y que el área explorada esté delimitada.
