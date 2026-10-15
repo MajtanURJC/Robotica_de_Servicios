@@ -102,7 +102,7 @@ Para coger las FOV hay que mirar este archivo '/home/ws/src/CustomRobots/drone_a
 
 En el que encontraremos estos valores:
 
-''' 
+
 <!-- Payload: Frontal and Ventral Cameras -->
         <link name="frontal_cam">
             <inertial>
@@ -199,7 +199,7 @@ En el que encontraremos estos valores:
         </joint>
 
     </model>
-  '''
+
   
 Por lo que encontramos que el fov horizontal es '1.02974 rad' y asi podemos calcular la distancia que nos sale:
 
