@@ -35,8 +35,7 @@ Primero, se convierten las coordenadas GPS de latitud y longitud a distancias en
 
 Después, se toma la posición de la lancha como origen (0, 0). El sistema de referencia del dron es UTM: el eje X apunta al este y el eje Y al norte. Por tanto, la posición de los supervivientes se expresa directamente en metros sin necesidad de cambiar signos ni intercambiar ejes.
 
-![Uploading imagen.png…]()
-
+<img width="679" height="185" alt="imagen" src="https://github.com/user-attachments/assets/c78f5f84-b746-46d1-a7ee-1385fb642d59" />
 
 ## GESTIÓN DE BATERIA
 
