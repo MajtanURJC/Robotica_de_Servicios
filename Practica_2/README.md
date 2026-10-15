@@ -66,9 +66,9 @@ Esto es necesario porque una misma cara puede detectarse varias veces al analiza
 - scaleFactor=1.1: factor de reducción de escala entre niveles de búsqueda, que permite detectar caras de diferentes tamaños.
 - minNeighbors=4: número mínimo de detecciones vecinas necesarias para aceptar una detección como cara.
   
-Además, para evitar contar varias veces a una misma persona, se establece una distancia mínima de 5 metros entre las posiciones registradas. Si se detecta una cara a menos de esa distancia de otra persona ya registrada, se considera que corresponde al mismo individuo y se descarta.
+Para evitar contar varias veces a una misma persona, cada detección se convierte a una posición estimada en el mundo, y solo se registra si está a más de 1,5 metros de cualquier persona ya registrada. Si una cara aparece a menos de esa distancia de otra ya registrada, se considera que corresponde al mismo individuo y se descarta.
 
-Este umbral se relaciona con la geometría de la cámara: como el dron vuela a 5 metros de altura, la imagen ventral proyecta una superficie del terreno cuya extensión depende del campo de visión. Por ello, una misma persona puede aparecer en imágenes capturadas desde distintas posiciones del dron. El margen de 5 metros permite agrupar detecciones próximas y reducir los duplicados, aunque puede hacer que dos personas distintas que estén muy cerca se contabilicen como una sola.
+Este umbral está relacionado con la geometría de la cámara. Como el dron vuela a 5 metros de altura, la imagen ventral proyecta sobre el terreno una superficie de 5,66 × 4,24 m, cuya extensión depende del campo de visión. Por ello, una misma persona puede aparecer en imágenes capturadas desde distintas posiciones del dron. Para evitar duplicados, la posición de cada cara se calcula a partir de sus coordenadas en la imagen y de la posición del dron, y no se usa directamente la posición del dron.
 
 ## ALGORITMO PARA CUBRIR EL TERRENO: ESPIRAL
 
