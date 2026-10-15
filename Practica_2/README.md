@@ -23,7 +23,7 @@ siguiente estados:
 Que funcionan del siguiente modo:
 - TAKEOFF -> Estado que está activo durante el tiempo que está despegando.
 - GO_TO_SURVIVORS -> Es el estado que lleva al robot a la posición inicial dada donde estan los supervivientes.
-- RETURN_TO_BASE -> Es el estado que se activa cuando la batería esta por debajo del 35 para volver al barco a recargar la batería.
+- RETURN_TO_BASE -> Es el estado que se activa cuando la batería esta por debajo del 30 para volver al barco a recargar la batería.
 - SEARCH_PEOPLE -> Estado en el cual va recorriendo toda la zona del accidente en busca de superviventes.
 - GO_TO_SAVED -> Este estado se activa después de recargar el dron, que va a la posición guardada cuando se ha quedado sin batería y sigue
   realizando el recorrido de busqueda.
