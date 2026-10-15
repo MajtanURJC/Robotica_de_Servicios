@@ -202,9 +202,7 @@ En el que encontraremos estos valores:
   
 Por lo que encontramos que el fov horizontal es '1.02974 rad' y asi podemos calcular la distancia que nos sale:
 
-\[
-A=2\cdot5\cdot\tan\left(\frac{1.02974}{2}\right)
-\]
+A = 2*5*(1.02974/2)
 
 Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros.
 ## VIDEO DEL FUNCIONAMIENTO
