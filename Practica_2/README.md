@@ -78,7 +78,7 @@ El algoritmo aumenta progresivamente la longitud de los desplazamientos, repitie
 
 <img width="887" height="558" alt="imagen" src="https://github.com/user-attachments/assets/e65924cb-759a-47f1-aee3-8373e43c5b67" />
 
-## PROBLEMAS QUE HE TENIDO DURANTE LA ELABORACIÓN DEL CODIGO
+## CALCULOS RELEVANTES REALIZADOS
 
 Primero he tenido que investigar como pasar de esto:
 
