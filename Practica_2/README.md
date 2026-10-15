@@ -80,7 +80,133 @@ El algoritmo aumenta progresivamente la longitud de los desplazamientos, repitie
 
 <img width="887" height="558" alt="imagen" src="https://github.com/user-attachments/assets/e65924cb-759a-47f1-aee3-8373e43c5b67" />
 
+## PROBLEMAS QUE HE TENIDO DURANTE LA ELABORACIÓN DEL CODIGO
 
+Primero he tenido que investigar como pasar de esto:
+
+<img width="720" height="99" alt="imagen" src="https://github.com/user-attachments/assets/7aff2626-659f-4722-8e03-35ebc5db9e57" />
+
+A posiciones en metros que poder comandar a 'HAL.set_cmd_pos', que para ello he tenido que pasar de coordenadas a grados decimales tanto de la posición
+del barco como de la de los supervivientes, entonces suponiendo que el barco es el origen [0,0] lo único que tenia que hacer es restar la del barco a la de los supervivientes para tenerla respecto al barco, una vez con ese valor lo múltiplico por el radio de la tierra teniendo ya las coordenadas en metros respecto al barco que he marcado como origen.
+
+El segundo problema que he tenido ha sido elegir la altura, necesitaba elegir una altura lo suficientementa alta para que pudiese detectar la mayor zona posible y no demasiado alta para que el algoritmo sea capaz de detectar caras, tras probar una altura de 10 y ver que era un disparate, he probado 5 y me ha funcionado bien.
+
+Una vez elegida la altura necesitaba calcular la distancia que hay entre los extremos de la imagen para poner esa distancia como minima entre dos mediciones para que dos detecciones sean de diferentes personas, para ello necesitaba algunos parametros de la camara ya que para saber la anchura y largura de las detecciones de la camara hay que seguir esta formula:
+
+<img width="227" height="69" alt="imagen" src="https://github.com/user-attachments/assets/22ff9f8e-5e33-4b70-bacc-bcfb434fed38" />
+
+<img width="221" height="70" alt="imagen" src="https://github.com/user-attachments/assets/1b7bdfb7-3199-4400-8226-59d412fb720d" />
+
+Para coger las FOV hay que mirar este archivo '/home/ws/src/CustomRobots/drone_assets/models/quadrotor_dual_cam/quadrotor_dual_cam.sdf'
+
+En el que encontraremos estos valores:
+
+''' 
+<!-- Payload: Frontal and Ventral Cameras -->
+        <link name="frontal_cam">
+            <inertial>
+                <pose>0 0 0.05 0 0 0</pose>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+                <mass>0.035</mass>
+            </inertial>
+
+            <pose>0 0 0.05 0 0 0</pose>
+            <sensor name="camera" type="camera">
+                <always_on>true</always_on>
+                <visualize>true</visualize>
+                <update_rate>30</update_rate>
+                <topic>drone0/frontal_cam/image_raw</topic>
+                <gz_frame_id>camera_rgb_frame</gz_frame_id>
+                <camera name="intel_realsense_r200">
+                    <camera_info_topic>drone0/frontal_cam/camera_info</camera_info_topic>
+                    <horizontal_fov>1.02974</horizontal_fov>
+                    <image>
+                        <width>320</width>
+                        <height>240</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+            </sensor>
+        </link>
+
+        <link name="ventral_cam">
+            <inertial>
+                <pose>0 0 -0.05 0 1.57 0</pose>
+                <inertia>
+                    <ixx>0.001</ixx>
+                    <ixy>0.000</ixy>
+                    <ixz>0.000</ixz>
+                    <iyy>0.001</iyy>
+                    <iyz>0.000</iyz>
+                    <izz>0.001</izz>
+                </inertia>
+                <mass>0.035</mass>
+            </inertial>
+
+            <pose>0 0 -0.05 0 1.57 0</pose>
+            <sensor name="camera" type="camera">
+                <always_on>true</always_on>
+                <visualize>true</visualize>
+                <update_rate>30</update_rate>
+                <topic>drone0/ventral_cam/image_raw</topic>
+                <gz_frame_id>camera_rgb_frame</gz_frame_id>
+                <camera name="intel_realsense_r200">
+                    <camera_info_topic>drone0/ventral_cam/camera_info</camera_info_topic>
+                    <horizontal_fov>1.02974</horizontal_fov>
+                    <image>
+                        <width>320</width>
+                        <height>240</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+            </sensor>
+        </link>
+
+        <joint name="frontal_cam_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>frontal_cam</child>
+        </joint>
+
+        <joint name="ventral_cam_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>ventral_cam</child>
+        </joint>
+
+    </model>
+  '''
+  
+Por lo que encontramos que el fov horizontal es '1.02974 rad' y asi podemos calcular la distancia que nos sale:
+
+\[
+A=2\cdot5\cdot\tan\left(\frac{1.02974}{2}\right)
+\]
+
+Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros.
 ## VIDEO DEL FUNCIONAMIENTO
 
 https://youtu.be/laQWJkZ0fRg
