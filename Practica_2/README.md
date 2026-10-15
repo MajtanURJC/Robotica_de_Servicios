@@ -95,6 +95,7 @@ Una vez elegida la altura necesitaba calcular la distancia que hay entre los ext
 
 <img width="227" height="69" alt="imagen" src="https://github.com/user-attachments/assets/22ff9f8e-5e33-4b70-bacc-bcfb434fed38" />
 
+
 <img width="221" height="70" alt="imagen" src="https://github.com/user-attachments/assets/1b7bdfb7-3199-4400-8226-59d412fb720d" />
 
 Para coger las FOV hay que mirar este archivo '/home/ws/src/CustomRobots/drone_assets/models/quadrotor_dual_cam/quadrotor_dual_cam.sdf'
@@ -203,10 +204,21 @@ En el que encontraremos estos valores:
 Por lo que encontramos que el fov horizontal es '1.02974 rad' y asi podemos calcular la distancia que nos sale:
 
 '''
-A = 2*5*(1.02974/2)
+A = 2*5*tan(1.02974/2)
 '''
 
-Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros.
+Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros, matizamos que esta es la longitud.
+
+Ahora como no nos dan el fov vertical debemos hallarlo, para ello usaremos esta formula:
+
+<img width="391" height="77" alt="imagen" src="https://github.com/user-attachments/assets/a28e5e5d-f03b-48cc-9806-d4ebced12551" />
+
+Calculando entonces:
+
+FOVv = 2*arctan((240/320)*tan(1.02974/2))
+
+Sacando como FOVv aproximado '0.82 radianes'
+
 ## VIDEO DEL FUNCIONAMIENTO
 
 https://youtu.be/laQWJkZ0fRg
