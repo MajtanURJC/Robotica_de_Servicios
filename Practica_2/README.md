@@ -203,21 +203,31 @@ En el que encontraremos estos valores:
   
 Por lo que encontramos que el fov horizontal es '1.02974 rad' y asi podemos calcular la distancia que nos sale:
 
-\[
-A = 2 \cdot 5 \cdot \tan\left(\frac{1.02974}{2}\right)
-\]
+$$
+A = 2 \cdot 5 \cdot \tan\left(\frac{1.02974}{2}\right) \approx 5.66 \text{ m}
+$$
 
-Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros, matizamos que esta es la longitud.
+Consiguiendo así sacar la distancia necesaria para que dos mediciones sean diferentes, que es 5,66 metros. Matizamos que esta es la longitud.
 
-Ahora como no nos dan el fov vertical debemos hallarlo, para ello usaremos esta formula:
+Ahora, como no nos dan el FOV vertical, debemos hallarlo. Para ello usaremos esta fórmula:
 
-<img width="391" height="77" alt="imagen" src="https://github.com/user-attachments/assets/a28e5e5d-f03b-48cc-9806-d4ebced12551" />
+$$
+FOV_v = 2 \cdot \arctan\left(\frac{h}{w} \cdot \tan\left(\frac{FOV_h}{2}\right)\right)
+$$
 
 Calculando entonces:
 
-FOVv = 2*arctan((240/320)*tan(1.02974/2))
+$$
+FOV_v = 2 \cdot \arctan\left(\frac{240}{320} \cdot \tan\left(\frac{1.02974}{2}\right)\right) \approx 0.802 \text{ rad} \approx 45.97^\circ
+$$
 
-Sacando como FOVv aproximado '0.82 radianes'
+Una vez calculado el FOV vertical, obtenemos la anchura que abarca la cámara a 5 metros de altura:
+
+$$
+B = 2 \cdot 5 \cdot \tan\left(\frac{FOV_v}{2}\right) = 2 \cdot 5 \cdot \tan\left(\frac{0.802}{2}\right) \approx 4.24 \text{ m}
+$$
+
+Por tanto, a 5 metros de altura la cámara cubre un área de aproximadamente $5.66 \times 4.24$ m.
 
 ## VIDEO DEL FUNCIONAMIENTO
 
