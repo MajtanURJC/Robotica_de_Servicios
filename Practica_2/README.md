@@ -34,6 +34,10 @@ Que funcionan del siguiente modo:
 Primero, se convierten las coordenadas GPS de latitud y longitud a distancias en metros. Para ello, se calcula la diferencia de latitud y longitud entre la lancha y los supervivientes, utilizando el radio de la Tierra y corrigiendo la distancia longitudinal según la latitud (multiplicándola por el coseno de la latitud de referencia). Así se obtienen las distancias hacia el este y hacia el norte.
 
 Después, se toma la posición de la lancha como origen (0, 0). El sistema de referencia del dron es UTM: el eje X apunta al este y el eje Y al norte. Por tanto, la posición de los supervivientes se expresa directamente en metros sin necesidad de cambiar signos ni intercambiar ejes.
+
+![Uploading imagen.png…]()
+
+
 ## GESTIÓN DE BATERIA
 
 La batería se descarga progresivamente en función del tiempo, pasando del 100 % al 0 % en 420 segundos (7 minutos). 
