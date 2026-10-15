@@ -74,11 +74,12 @@ Este umbral se relaciona con la geometría de la cámara: como el dron vuela a 5
 
 Cuando el dron llega a la zona donde se encuentran los supervivientes, comienza una búsqueda sistemática mediante un algoritmo de exploración en espiral. El objetivo es cubrir progresivamente el área de búsqueda, desplazándose por distintas posiciones para aumentar las posibilidades de detectar a todas las personas.
 
-La implementación consiste en hacer que el dron recorra una trayectoria en espiral, ampliando progresivamente el área explorada desde el punto inicial. Durante el recorrido, utiliza la cámara ventral para capturar imágenes del terreno y ejecutar el algoritmo de detección de caras. Cada vez que detecta una persona, registra su posición para evitar contabilizarla de nuevo si aparece en otra imagen.
+Este algoritmo se calculo antes de la fase de ejecución, creando una lista con todas las esquina. La espiral se crea partiendo de un punto central y realizando desplazamientos en cuatro direcciones: derecha, arriba, izquierda y abajo. En cada movimiento se calcula una nueva posición, que se añade a la lista de puntos de la trayectoria.
 
-La búsqueda continúa mientras el dron avanza por la trayectoria, combinando el movimiento con la detección de supervivientes. De esta manera, no se limita a observar una única zona, sino que inspecciona diferentes partes del área de búsqueda de forma ordenada.
+El algoritmo aumenta progresivamente la longitud de los desplazamientos, repitiendo dos movimientos con cada longitud antes de incrementarla. De esta forma, la trayectoria se expande alrededor del centro siguiendo una espiral cuadrada hacia el exterior sin explorar zonas exploradas anteriormente. El proceso continúa hasta que se alcanza el límite de distancia establecido respecto al centro.
 
-La ventaja del algoritmo en espiral es que permite ampliar poco a poco la zona inspeccionada sin necesidad de movimientos aleatorios. Para asegurar una cobertura completa, es necesario que la separación entre las trayectorias tenga en cuenta el campo de visión de la cámara, por ello, aprovechando la geomnetría hecha anteriormente he cuadrado que la distancia entre trayectorias sea de 5 metros consiguiendo así que no haya zonas sin detectar.
+<img width="887" height="558" alt="imagen" src="https://github.com/user-attachments/assets/e65924cb-759a-47f1-aee3-8373e43c5b67" />
+
 
 ## VIDEO DEL FUNCIONAMIENTO
 
