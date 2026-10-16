@@ -230,6 +230,13 @@ $$
 
 Por tanto, a 5 metros de altura la cámara cubre un área de aproximadamente $5.66 \times 4.24$ m.
 
+Por último, destacar que el tamaño de la espiral cambia con un solo argumento:
+
+<img width="228" height="63" alt="imagen" src="https://github.com/user-attachments/assets/cf336b36-cb60-425d-9f27-936744a98828" />
+
+Donde podemos tocar tanto la distancia entre caminos de la espiral como el radio máximo de la espiral, yo he puesto 20 para que el video no sea demasiado largo pero se puede poner la distancia que se prefiera, tanto en el rango máximo de la espiral como en la distancia entre caminos.
+
+
 ## VIDEO DEL FUNCIONAMIENTO
 
 https://youtu.be/laQWJkZ0fRg
