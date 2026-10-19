@@ -69,6 +69,9 @@ Ahora solo hay que detectar en que huecos la X es mayor que 5 metiendo un margen
 
 https://github.com/user-attachments/assets/cd53d73b-0377-472b-80c1-146bdef73437
 
+Ahora me he encontrado con el problema de que los rayos que devuelven inf no tenemos modo de saber en que angulo van ni la posicion ni nada por lo que siguiendo esa metodología no vamos a saber si hay hueco en una posición o no.
+
+Tras mucho pensar me he dado cuenta que comparando dos puntos consecutivos y viendo la distancia en y entre ellos sabremos el espacio que hay y si hay un hueco de aparcamiento.
 
 
 
