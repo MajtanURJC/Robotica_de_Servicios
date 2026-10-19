@@ -52,4 +52,6 @@ Lo que nos devuelve todos estos datos:
 
 https://github.com/user-attachments/assets/aaec1798-aff2-4836-a454-c0e7ecfcf331
 
+Y podemos ver un patron que es que todos son valores de X positivos exceptuando algunos negativos que corresponden a detectar el coche con el LIDAR, entonces sabemos que la X tiene que ser mayor que 0 y más en concreto mayor que 4 para evitar detectar nuestro propio coche, y que la Y va aproximadamente en este rango [20,-20] por lo que tenemos más o menos un rango de detección.
 
+Ahora hay que ajustar la Z ya que solo queremos una linea de valores en 2D y no nos interesa todo el groso de los datos, para ello vemos que el valor que más se repite está alrededor de -0.5 así que voy a utilizar valores cercanos a ese valor.
