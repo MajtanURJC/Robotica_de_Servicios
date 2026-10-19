@@ -46,3 +46,10 @@ for punto in lidar.points:
         print(f"X: {x:.2f}, Y: {y:.2f}, Z: {z:.2f}")
 Frequency.tick()
 ```
+
+Lo que nos devuelve todos estos datos:
+
+
+https://github.com/user-attachments/assets/aaec1798-aff2-4836-a454-c0e7ecfcf331
+
+
