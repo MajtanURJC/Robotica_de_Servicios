@@ -52,6 +52,17 @@ Lo que nos devuelve todos estos datos:
 
 https://github.com/user-attachments/assets/aaec1798-aff2-4836-a454-c0e7ecfcf331
 
-Y podemos ver un patron que es que todos son valores de X positivos exceptuando algunos negativos que corresponden a detectar el coche con el LIDAR, entonces sabemos que la X tiene que ser mayor que 0 y más en concreto mayor que 4 para evitar detectar nuestro propio coche, y que la Y va aproximadamente en este rango [20,-20] por lo que tenemos más o menos un rango de detección.
+### Sistema de coordenadas
 
-Ahora hay que ajustar la Z ya que solo queremos una linea de valores en 2D y no nos interesa todo el groso de los datos, para ello vemos que el valor que más se repite está alrededor de -0.5 así que voy a utilizar valores cercanos a ese valor.
+Lo primero es identificar cómo está definido el sistema de coordenadas del LiDAR, ya que la documentación del ejercicio no lo especifica. Para ello se imprimen los datos que devuelve el sensor y se hacen pruebas colocando objetos en distintas posiciones respecto al robot, observando cómo cambian los valores de cada coordenada. A partir de estas pruebas se comprueba que la coordenada X positiva apunta hacia delante, la Y positiva hacia la derecha y la Z positiva hacia arriba. Con esta información se pueden interpretar correctamente las mediciones y establecer los filtros necesarios para detectar obstáculos y posibles huecos.
+
+<img width="1024" height="559" alt="imagen" src="https://github.com/user-attachments/assets/852877d9-5b4c-4137-973d-815f2e640df4" />
+
+Para filtrar los datos, hemos probado diferentes rangos de coordenadas hasta encontrar el filtro que mejor se adapta a nuestro objetivo. Finalmente, seleccionamos los puntos con X entre -5 y 5 metros y Z entre -1,3 y -1,2 metros y las Y positivas ya que por ahora el lado izquierdo no nos interesa. De esta forma, obtenemos una franja concreta de la nube de puntos, reduciendo la cantidad de datos y centrándonos en la zona que nos interesa para detectar posibles huecos. Cabe destacar que habrá que ajustar en un futuro el rango de la X.
+
+Finalmente, analizamos la coordenada Y: si obtenemos valores superiores a 6 metros, interpretaremos que podría haber un hueco lateral, siempre que se haya comprobado que no se trata simplemente de una gran distancia hasta otro obstáculo.
+
+Aquí podemos ver una prueba que ha sido bastante reveladora y la final:
+
+https://github.com/user-attachments/assets/2c137591-0935-43e4-996c-af15cd73726f
+
