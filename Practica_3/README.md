@@ -57,12 +57,16 @@ https://github.com/user-attachments/assets/aaec1798-aff2-4836-a454-c0e7ecfcf331
 Lo primero es identificar cómo está definido el sistema de coordenadas del LiDAR, ya que la documentación del ejercicio no lo especifica. Para ello se imprimen los datos que devuelve el sensor y se hacen pruebas colocando objetos en distintas posiciones respecto al robot, observando cómo cambian los valores de cada coordenada. A partir de estas pruebas se comprueba que la coordenada X positiva apunta hacia delante, la Y positiva hacia la derecha y la Z positiva hacia arriba. Con esta información se pueden interpretar correctamente las mediciones y establecer los filtros necesarios para detectar obstáculos y posibles huecos.
 
 <img width="1024" height="559" alt="imagen" src="https://github.com/user-attachments/assets/852877d9-5b4c-4137-973d-815f2e640df4" />
+Para filtrar los datos, hemos probado diferentes rangos de coordenadas hasta encontrar el que mejor se adapta a nuestro objetivo. Finalmente, seleccionamos los puntos con Z entre -1 y -0,9 metros y con Y entre -0,2 y 0 metros, descartando los del propio coche y sustituyendo los valores infinitos por 30. Así obtenemos una franja concreta de la nube de puntos, centrada en la zona que nos interesa para detectar huecos.
 
-Para filtrar los datos, hemos probado diferentes rangos de coordenadas hasta encontrar el filtro que mejor se adapta a nuestro objetivo. Finalmente, seleccionamos los puntos con X entre -5 y 5 metros y Z entre -1,3 y -1,2 metros y las Y positivas ya que por ahora el lado izquierdo no nos interesa. De esta forma, obtenemos una franja concreta de la nube de puntos, reduciendo la cantidad de datos y centrándonos en la zona que nos interesa para detectar posibles huecos. Cabe destacar que habrá que ajustar en un futuro el rango de la X.
-
-Finalmente, analizamos la coordenada Y: si obtenemos valores superiores a 6 metros, interpretaremos que podría haber un hueco lateral, siempre que se haya comprobado que no se trata simplemente de una gran distancia hasta otro obstáculo.
+Después analizamos la coordenada X: los coches aparcados están a unos 4,5 metros, por lo que si obtenemos valores superiores a 5 metros, interpretamos que puede haber un hueco lateral.
 
 Aquí podemos ver una prueba que ha sido bastante reveladora y la final:
 
 https://github.com/user-attachments/assets/2c137591-0935-43e4-996c-af15cd73726f
+
+Ahora solo hay que detectar en que huecos la X es mayor que 5 metiendo un margen y asi sabremos los huecos:
+
+Uploading Grabación de pantalla desde 2026-10-19 20-35-07.mp4…
+
 
