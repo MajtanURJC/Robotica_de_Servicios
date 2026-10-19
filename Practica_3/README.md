@@ -67,6 +67,8 @@ https://github.com/user-attachments/assets/2c137591-0935-43e4-996c-af15cd73726f
 
 Ahora solo hay que detectar en que huecos la X es mayor que 5 metiendo un margen y asi sabremos los huecos:
 
-Uploading Grabación de pantalla desde 2026-10-19 20-35-07.mp4…
+https://github.com/user-attachments/assets/cd53d73b-0377-472b-80c1-146bdef73437
+
+
 
 
