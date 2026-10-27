@@ -77,6 +77,7 @@ Ya una vez con eso implementado y funcionando tenemos otro problema, y es que el
 
 Además, tenemos el problema de que los sistemas de coordenadas del LiDAR y del mapa están girados entre sí, ya que los ejes del LiDAR no coinciden con los que utilizamos en nuestro sistema de referencia. En nuestro caso, el LiDAR tiene el eje X positivo hacia la derecha y el eje Y positivo hacia delante, mientras que en nuestro sistema de referencia utilizamos el eje X hacia delante y el eje Y hacia la izquierda. Por tanto, antes de aplicar la rotación correspondiente a la orientación del coche y sumar su posición, tenemos que intercambiar las coordenadas y cambiar el signo de una de ellas para adaptarlas al sistema de referencia que estamos utilizando. De esta forma, conseguimos que los puntos detectados por el LiDAR estén correctamente orientados antes de calcular su posición absoluta en el mapa.
 
-Uno de los grandes problemas que me he encontrado
+<img width="1424" height="1044" alt="imagen" src="https://github.com/user-attachments/assets/57da8351-1c2a-45a9-8728-c7d2e162bb70" />
+
 
 
