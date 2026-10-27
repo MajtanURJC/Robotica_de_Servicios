@@ -79,5 +79,9 @@ Además, tenemos el problema de que los sistemas de coordenadas del LiDAR y del 
 
 <img width="1424" height="1044" alt="imagen" src="https://github.com/user-attachments/assets/57da8351-1c2a-45a9-8728-c7d2e162bb70" />
 
+Otro problema con el que me he encontrado es que el coche es no holonómico, es decir, no puede desplazarse lateralmente: solo puede avanzar, retroceder o girar mientras se mueve. Para cambiar de posición en el eje lateral tiene que hacerlo a base de arcos, y cada metro que gana hacia un lado le cuesta varios metros de recorrido hacia delante o hacia atrás. Además, el giro está limitado por la velocidad angular máxima y el radio de la curva depende de la velocidad, por lo que no se puede cerrar el giro todo lo que se quiera.
 
+Para solucionarlo, he acercado el carril de búsqueda hacia la derecha, de modo que el coche circula más cerca de los coches aparcados y la distancia lateral que le falta recorrer al aparcar es mucho menor. Para ello, primero se desplaza hacia el carril de búsqueda controlando el ángulo en función del error lateral, y solo empieza a detectar el hueco cuando ya está en el carril y va casi recto. Además, al detectar el hueco solo se tienen en cuenta los puntos del lado derecho, que son donde están los coches aparcados.
+
+Por último, para facilitar la entrada, al alinearse con el coche de delante el coche no llega recto, sino que va aumentando progresivamente su ángulo hasta llegar a 360/5.7° (he ido probando valores para ver cual era el que máximizaba el acercamiento al coche de al lado y mejoraba el parking para hacer el menor numero de maniobras) justo en el punto de alineación. De esta forma, aprovechamos el tramo de avance, donde sí hay espacio, para orientar el coche hacia la plaza. Cuando empieza la marcha atrás ya va inclinado, sin tener que gastar espacio en girar, y solo le queda retroceder en línea recta hasta la posición de enderezar y alinearse con el hueco.
 
