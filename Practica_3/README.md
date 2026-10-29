@@ -99,4 +99,4 @@ Para organizar todo el proceso, he implementado una máquina de estados que divi
 
 La ejecución final nos quedaría asi:
 
-[[https://youtube.com/shorts/Xp2qRfM9xp4](https://youtube.com/shorts/Ee_OFzZrVBc)](https://youtube.com/shorts/3BxwspNXKOw)
+https://youtube.com/shorts/3BxwspNXKOw?feature=share
