@@ -102,3 +102,11 @@ Para organizar todo el proceso, he implementado una máquina de estados que divi
 La ejecución final nos quedaría asi:
 
 https://youtube.com/shorts/3BxwspNXKOw?feature=share
+
+Aquí el video del funcionamiento con el coche solo alante:
+
+https://youtu.be/kMY0-DQ-RgE
+
+Y aqui el video del funcionamiento con coches solo atras:
+
+https://youtube.com/shorts/ewEGwnvD1VM
