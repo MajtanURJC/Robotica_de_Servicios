@@ -159,3 +159,7 @@ https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 
 La estanteria mide 2 metros de largo por 1 de ancho.
 Al coger la estanteria tengo que librerar el nuevo mapa para que no crea que hay un obstaculo, ya que estamos moviendo el obstaculo que estamos detectando.
+
+Para debbugear que zona liberaba y que dona ocupaba he usado showNunpy para dibujar en el mapa:
+<img width="1045" height="421" alt="imagen" src="https://github.com/user-attachments/assets/9b487b0c-af2e-4a05-8959-94eeabd8c5b6" />
+
