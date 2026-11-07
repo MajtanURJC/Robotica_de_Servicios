@@ -174,4 +174,4 @@ No es el camino más optimo nunca.
 Problemas con el inflado de obstaculos
 Problema ya que al principio usaba solo el x e y del planner y no el angulo
 Problema de que como voy mirando más alante tambien cojo el angulo de mas alante por lo que a veces se me perdia, usar un VFF entre el angulo hasta el punto y el angulo que me da ese punto.
-
+Otro problema es que miraba a puntos mas alante y el mas cercano y a veces cogia el punto anterior y entraba en un bucle por lo que por fuerza hago que coja puntos de indice superior
