@@ -160,6 +160,9 @@ https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 La estanteria mide 2 metros de largo por 1 de ancho.
 Al coger la estanteria tengo que librerar el nuevo mapa para que no crea que hay un obstaculo, ya que estamos moviendo el obstaculo que estamos detectando.
 
+
+Cada vez que el robot planifica rehago el mapa de ocupación desde cero a partir del mapa original, y le aplico lo que ha cambiado en el almacén: las estanterías que he recogido las vacío y las que he dejado las marco como obstáculo. Como las zonas vaciadas se van acumulando en una lista no se pierden de una planificación a otra, y lo mismo con las patas de las que ya he dejado. Lo que cambia es cómo marco las estanterías dejadas según si el robot lleva una encima o no. Si va libre solo marco las patas porque puede pasar por debajo, y si va cargado marco la estantería entera porque no puede pasar por en medio. No necesito dos mapas guardados, simplemente construyo uno u otro según el estado. En el debug siempre dibujo solo las patas, así se ve limpio, aunque el bloque entero sí cuenta para planificar. Además la estantería la dejo girada 90 grados respecto a como la recojo, así que planifico ya con ese ángulo final y el robot se gira en el sitio antes de bajarla. Lo que no controlo es que ese giro en el sitio choque con algo, solo compruebo que la posición final es válida, y si dejo una estantería muy pegada a otra el margen de seguridad con el robot cargado puede hacer que no encuentre camino.
+
 Para debbugear que zona liberaba y que dona ocupaba he usado showNunpy para dibujar en el mapa:
 <img width="1045" height="421" alt="imagen" src="https://github.com/user-attachments/assets/9b487b0c-af2e-4a05-8959-94eeabd8c5b6" />
 
