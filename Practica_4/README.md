@@ -166,3 +166,12 @@ Cada vez que el robot planifica rehago el mapa de ocupación desde cero a partir
 Para debbugear que zona liberaba y que dona ocupaba he usado showNunpy para dibujar en el mapa:
 <img width="1045" height="421" alt="imagen" src="https://github.com/user-attachments/assets/9b487b0c-af2e-4a05-8959-94eeabd8c5b6" />
 
+
+Más problemas:
+Entender el planificador.
+Darme cuenta de que le podia poner un angulo objetivo al planner para que llegue con ese objetivo en vez de que una vez llegar girar.
+No es el camino más optimo nunca.
+Problemas con el inflado de obstaculos
+Problema ya que al principio usaba solo el x e y del planner y no el angulo
+Problema de que como voy mirando más alante tambien cojo el angulo de mas alante por lo que a veces se me perdia, usar un VFF entre el angulo hasta el punto y el angulo que me da ese punto.
+
