@@ -180,3 +180,17 @@ Ancho 1 largo 2
 Dubins State Space -> Problemas con el giro ya que no coge el radio de giro y al girar choca con cosas
 
 Para el caso de eliminar los margenes de seguridad, tambien he visto el OBB ya que con Dubins mira el radio pero muchas veces no ocupa es eradio y necesito meterla por espacios mucho menores al radio y que pueda girar un poco, porque bloquea todo el giro con Dubins aunque quepa
+
+    """
+    Comprobacion de colision con un rectangulo orientado (OBB).
+
+    El robot es un rectangulo de largo_robot x ancho_robot (mas el margen
+    de seguridad) centrado en (x, y) y girado yaw + giro_huella. Cada pixel
+    ocupado se trata como el cuadrado que realmente es (de lado 1 pixel,
+    centrado en su indice) y se comprueba su solape exacto con el
+    rectangulo mediante el teorema del eje separador (SAT).
+
+    No se redondean las esquinas del rectangulo a pixeles ni se usa ninguna
+    circunferencia, asi que no hay falsos positivos por exceso de
+    conservadurismo ni falsos negativos por redondeo.
+    """
