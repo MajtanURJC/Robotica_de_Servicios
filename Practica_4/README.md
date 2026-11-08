@@ -177,3 +177,4 @@ Problema de que como voy mirando más alante tambien cojo el angulo de mas alant
 Otro problema es que miraba a puntos mas alante y el mas cercano y a veces cogia el punto anterior y entraba en un bucle por lo que por fuerza hago que coja puntos de indice superior
 
 Ancho 1 largo 2
+Dubins State Space -> Problemas con el giro ya que no coge el radio de giro y al girar choca con cosas
