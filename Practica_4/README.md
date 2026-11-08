@@ -178,3 +178,5 @@ Otro problema es que miraba a puntos mas alante y el mas cercano y a veces cogia
 
 Ancho 1 largo 2
 Dubins State Space -> Problemas con el giro ya que no coge el radio de giro y al girar choca con cosas
+
+Para el caso de eliminar los margenes de seguridad, tambien he visto el OBB ya que con Dubins mira el radio pero muchas veces no ocupa es eradio y necesito meterla por espacios mucho menores al radio y que pueda girar un poco, porque bloquea todo el giro con Dubins aunque quepa
