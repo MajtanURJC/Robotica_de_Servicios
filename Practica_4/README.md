@@ -196,3 +196,13 @@ Para el caso de ackerman, tambien he visto el OBB ya que con Dubins necesita OBB
     circunferencia, asi que no hay falsos positivos por exceso de
     conservadurismo ni falsos negativos por redondeo.
     """
+
+**Marcha atrás.** El robot Ackermann puede retroceder, así que el planificador no se limita a caminos que solo van hacia delante. Usa un espacio de curvas que admite los dos sentidos, con el mismo radio de giro mínimo en ambos. Gracias a eso puede resolver situaciones que hacia delante serían imposibles o muy largas, como salir de un hueco estrecho o colocarse en la orientación justa para recoger una estantería sin tener que dar una vuelta enorme.
+
+Un detalle importante es que el camino que devuelve el planificador solo guarda la posición y la orientación del robot en cada punto, no si en ese momento va hacia delante o hacia atrás. Ese sentido se deduce después: en cada paso se compara hacia dónde se desplaza el robot con hacia dónde está mirando. Si el desplazamiento va en la misma dirección que la orientación, avanza; si va en la contraria, retrocede.
+
+Con esa información se parte la trayectoria en tramos de sentido constante. Cada vez que el sentido cambia hay un cambio de marcha, y ese punto es el final de un tramo y el principio del siguiente.
+
+Cada tramo se sigue con la misma idea de siempre: elegir un punto del camino un poco por delante y calcular el arco que lleva hasta él. En un tramo de marcha atrás se hace el mismo cálculo pero imaginando que el robot mira hacia el lado contrario, y la velocidad lineal que se envía es negativa. La velocidad angular sale con el mismo cálculo, porque el giro del robot es el mismo mirado desde cualquiera de los dos lados.
+
+Al llegar al final de un tramo intermedio, el robot se detiene un momento, como haría un coche al cambiar de marcha, y entonces empieza el siguiente tramo en el sentido contrario. Si es el último tramo, se comprueba que ha llegado a la posición y la orientación del objetivo; si se ha pasado sin llegar, se replanifica desde donde esté.
