@@ -178,6 +178,14 @@ Otro problema es que miraba a puntos mas alante y el mas cercano y a veces cogia
 
 Ancho 1 largo 2
 
+El planificador OMPL trabaja con posiciones (X, Y) y orientaciones (yaw). Por tanto, cada punto de la trayectoria tiene asociada una orientación.
+
+El yaw representa la orientación que debe tener el robot en cada punto de la trayectoria. Va cambiando progresivamente desde la orientación inicial hasta alcanzar la orientación definida para el objetivo.
+
+Sin embargo, esto no significa que la orientación de cada punto tenga que coincidir con la dirección hacia la que se encuentra el siguiente punto. Es decir, el robot puede avanzar en una dirección mientras mantiene una orientación diferente.
+
+Por tanto, el yaw del planificador se puede entender como una transición de ángulos a lo largo de la trayectoria, cuyo valor final sí está condicionado por la orientación establecida en el objetivo.
+
 ## ACKERMAN
 Dubins State Space -> Problemas con el giro ya que el ackerman no puede girar sobre si mismo
 
