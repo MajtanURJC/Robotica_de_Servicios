@@ -157,6 +157,7 @@ https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 
 <img width="1418" height="1072" alt="imagen" src="https://github.com/user-attachments/assets/7b4985ba-1328-4650-bd19-85561b7e09b5" />
 
+## Primer caso: Robot como un punto expandendo
 La estanteria mide 2 metros de largo por 1 de ancho.
 Al coger la estanteria tengo que librerar el nuevo mapa para que no crea que hay un obstaculo, ya que estamos moviendo el obstaculo que estamos detectando.
 
@@ -185,7 +186,7 @@ El yaw representa la orientación que debe tener el robot en cada punto de la tr
 Sin embargo, esto no significa que la orientación de cada punto tenga que coincidir con la dirección hacia la que se encuentra el siguiente punto. Es decir, el robot puede avanzar en una dirección mientras mantiene una orientación diferente.
 
 Por tanto, el yaw del planificador se puede entender como una transición de ángulos a lo largo de la trayectoria, cuyo valor final sí está condicionado por la orientación establecida en el objetivo.
-
+## Segundo caso: Robot con la forma real y sin expandir
 ## ACKERMAN
 Dubins State Space -> Problemas con el giro ya que el ackerman no puede girar sobre si mismo
 
