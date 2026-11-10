@@ -187,6 +187,20 @@ Sin embargo, esto no significa que la orientación de cada punto tenga que coinc
 
 Por tanto, el yaw del planificador se puede entender como una transición de ángulos a lo largo de la trayectoria, cuyo valor final sí está condicionado por la orientación establecida en el objetivo.
 ## Segundo caso: Robot con la forma real y sin expandir
+
+Para que el planificador tenga en cuenta el tamaño y la forma del robot, se utiliza una función de comprobación de colisiones (`State Validity Checker`) de OMPL.
+
+El planificador trabaja con un espacio de estados SE2, por lo que cada estado está definido por la posición del robot `(x, y)` y su orientación (`yaw`).
+
+En lugar de pasarle directamente una figura geométrica a OMPL, se comprueba si el robot puede ocupar cada una de las posiciones que va generando el planificador. Para ello, se define una huella rectangular con las dimensiones del robot, que cambian dependiendo de si lleva una estantería o no.
+
+A partir de la posición y orientación del robot, se calculan las cuatro esquinas del rectángulo y se transforman sus coordenadas del mundo a píxeles del mapa. Después, se genera una máscara del rectángulo utilizando `cv2.fillConvexPoly` y se comprueba si alguno de los píxeles que ocupa coincide con una zona ocupada del mapa.
+
+Si alguna parte del rectángulo está dentro de un obstáculo o fuera de los límites del mapa, la posición se considera no válida. En caso contrario, se considera válida.
+
+De esta forma, OMPL puede planificar teniendo en cuenta la forma y las dimensiones reales del robot, en lugar de tratarlo como un punto.
+
+Por último, reducimos el engorde de las paredes a 0.
 ## ACKERMAN
 Dubins State Space -> Problemas con el giro ya que el ackerman no puede girar sobre si mismo
 
