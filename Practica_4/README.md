@@ -160,103 +160,76 @@ while True:
     Frequency.tick()
 ```
 
-Una vez con los puntos los comparo en el gimp con el mapa y saco los pixels para la calibración.
+Una vez tengo los puntos de referencia, los comparo con el mapa utilizando GIMP para obtener los píxeles correspondientes a cada coordenada. De esta forma puedo relacionar las coordenadas del mundo con las coordenadas de la imagen y obtener los datos necesarios para realizar la calibración. A partir de estos puntos calculo la transformación que permite pasar de un sistema de coordenadas a otro.
 
 ![Calibración](https://github.com/user-attachments/assets/7b4985ba-1328-4650-bd19-85561b7e09b5)
 
-Así queda el recorrido de calibración:
+Así queda el recorrido de calibración, que utilizo para comprobar que la correspondencia entre ambos sistemas es correcta:
 
 https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 
 ## 2. Primer caso: el robot como un punto (obstáculos expandidos)
 
-La estantería mide **2 metros de largo por 1 de ancho**.
+Para el primer caso trato al robot como si fuese un punto y expando los obstáculos del mapa para tener en cuenta sus dimensiones. La estantería que tiene que transportar mide 2 metros de largo por 0,88 metros de ancho.
 
-Al coger la estantería hay que liberar el mapa para que el planificador no crea que hay un obstáculo: la estantería que llevo encima es justo el obstáculo que estaba detectando.
+Cuando el robot recoge una estantería, tengo que liberar esa zona del mapa, ya que la estantería que lleva encima es precisamente el obstáculo que estaba detectando el planificador. Si no lo hiciese, el robot consideraría que tiene un obstáculo dentro de su propia posición y no podría planificar correctamente.
 
-### Cómo gestiono el mapa de ocupación
+Para gestionar el mapa de ocupación, cada vez que el robot necesita planificar vuelvo a generarlo desde cero a partir del mapa original. Sobre este mapa aplico los cambios que se han producido durante la ejecución: las estanterías que he recogido se vacían y las que he dejado en otras posiciones se marcan como obstáculos. Las zonas que voy vaciando se guardan en una lista, de manera que se mantienen entre las distintas planificaciones y no vuelven a aparecer como obstáculos. Lo mismo hago con las patas de las estanterías que he ido dejando.
 
-Cada vez que el robot planifica, **rehago el mapa de ocupación desde cero** a partir del mapa original y le aplico lo que ha cambiado en el almacén:
+La forma de representar las estanterías que he dejado depende de si el robot lleva una encima o no. Cuando el robot está libre, únicamente marco las patas de las estanterías, ya que puede pasar por debajo de ellas. Sin embargo, cuando lleva una estantería, marco toda su superficie como obstáculo, porque ya no puede pasar por debajo. Por tanto, no necesito mantener dos mapas diferentes, sino que construyo el mapa correspondiente en función del estado del robot en cada planificación. En la representación de depuración dibujo siempre únicamente las patas para que el mapa se vea más limpio, aunque cuando el robot está cargado toda la superficie de la estantería sí se tiene en cuenta para comprobar las colisiones.
 
-- Las estanterías que he recogido las **vacío**.
-- Las que he dejado las **marco como obstáculo**.
+Además, cuando dejo una estantería la coloco girada 90 grados respecto a la orientación en la que la recojo. Por eso, directamente le doy al planificador la orientación final que quiero conseguir. De esta manera, el robot llega a la posición con la orientación adecuada y únicamente tiene que girar sobre sí mismo antes de bajar la estantería.
 
-Las zonas vaciadas se van acumulando en una lista, así que no se pierden de una planificación a otra. Lo mismo ocurre con las patas de las estanterías que ya he dejado.
+Hay algunas limitaciones en este planteamiento. Por ejemplo, no compruebo si durante ese giro sobre sí mismo el robot puede chocar con algún obstáculo, sino que únicamente compruebo que la posición y orientación finales sean válidas. También puede ocurrir que, si dejo una estantería demasiado cerca de otra, el margen de seguridad que utilizo cuando el robot está cargado impida encontrar un camino válido.
 
-Lo que cambia es cómo marco las estanterías dejadas según si el robot lleva una encima o no:
-
-- **Robot libre:** solo marco las patas, porque puede pasar por debajo.
-- **Robot cargado:** marco la estantería entera, porque no puede pasar por en medio.
-
-No necesito guardar dos mapas: construyo uno u otro según el estado. En el debug dibujo siempre solo las patas para que se vea limpio, aunque el bloque entero sí cuenta para planificar.
-
-Además, la estantería la dejo **girada 90°** respecto a cómo la recojo, así que planifico ya con ese ángulo final y el robot gira en el sitio antes de bajarla.
-
-**Limitaciones conocidas:**
-
-- No controlo que ese giro en el sitio choque con algo; solo compruebo que la posición final es válida.
-- Si dejo una estantería muy pegada a otra, el margen de seguridad con el robot cargado puede hacer que no encuentre camino.
-
-Para depurar qué zona liberaba y cuál ocupaba usé `showNumpy` para dibujar sobre el mapa:
-
-![Depuración del mapa de ocupación](https://github.com/user-attachments/assets/9b487b0c-af2e-4a05-8959-94eeabd8c5b6)
+Para comprobar que estaba liberando y ocupando correctamente las zonas del mapa utilicé la función `showNumpy`, que me permite dibujar sobre la imagen del mapa y visualizar cómo se estaba modificando el mapa de ocupación.
 
 ### Entender el yaw del planificador
 
-El planificador OMPL trabaja con posiciones `(X, Y)` y orientaciones (`yaw`), así que cada punto de la trayectoria lleva asociada una orientación.
+Una de las partes que más me costó entender fue el funcionamiento del yaw del planificador. OMPL trabaja con un espacio de estados SE2, por lo que cada estado de la trayectoria contiene tres valores: la posición X, la posición Y y la orientación del robot (yaw). Al principio utilizaba únicamente las coordenadas X e Y, sin tener en cuenta la orientación que devolvía el planificador.
 
-Ese yaw es la orientación que debe tener el robot en cada punto y va cambiando progresivamente desde la orientación inicial hasta la definida en el objetivo. Pero eso **no significa** que la orientación de cada punto coincida con la dirección hacia el siguiente: el robot puede avanzar en una dirección mientras mantiene una orientación distinta.
+El yaw representa la orientación que debe tener el robot en cada punto de la trayectoria. Esta orientación va cambiando desde la orientación inicial hasta alcanzar la orientación definida en el objetivo. Sin embargo, no tiene por qué coincidir con la dirección en la que se desplaza el robot hacia el siguiente punto. Es decir, el robot puede estar avanzando en una dirección mientras mantiene una orientación diferente. Por tanto, no hay que confundir la orientación del robot con la dirección de desplazamiento.
 
-Por tanto, el yaw del planificador se entiende como una **transición de ángulos** a lo largo de la trayectoria, cuyo valor final sí está condicionado por la orientación del objetivo.
+Durante el desarrollo me encontré con varios problemas relacionados con el planificador. Uno de los primeros fue entender cómo funcionaba y descubrir que podía establecer directamente una orientación objetivo. Esto me permitió conseguir que el robot llegase a su destino con la orientación deseada, en lugar de tener que realizar una planificación adicional para girar una vez alcanzada la posición.
 
-### Problemas que me he encontrado
+Otro problema fue que los caminos que generaba el planificador no siempre eran los más óptimos. También tuve que ajustar el inflado de los obstáculos para evitar que el robot considerase inaccesibles zonas por las que realmente podía pasar.
 
-- **Entender el planificador.**
-- **Darme cuenta de que podía darle un ángulo objetivo al planner**, para que llegue ya con esa orientación en vez de llegar y luego girar.
-- **El camino nunca es el más óptimo.**
-- **Inflado de obstáculos.**
-- **Usar solo `x` e `y`** del planner al principio y no el ángulo.
-- **Mirar puntos más adelante** hace que también tome el ángulo de más adelante, y a veces el robot se perdía. La solución fue usar un **VFF** (campo de fuerzas virtual) que combina el ángulo hasta el punto con el ángulo que da ese punto.
-- **Bucles con el punto más cercano:** al mirar puntos adelantados y el más cercano, a veces cogía el punto anterior y entraba en un bucle. La solución fue forzar que siempre coja puntos de **índice superior**.
+En cuanto al seguimiento de la trayectoria, inicialmente utilizaba únicamente las coordenadas X e Y. Al empezar a tener en cuenta la orientación aparecieron otros problemas. Por ejemplo, cuando intentaba mirar puntos más adelantados de la trayectoria para conseguir un movimiento más suave, también utilizaba la orientación de esos puntos. Esto provocaba que, en determinadas situaciones, el robot se desviase o perdiese el camino. Para solucionarlo implementé un VFF (Virtual Force Field), que combina el ángulo hacia el punto objetivo con la orientación que proporciona el propio punto de la trayectoria. Así consigo tener en cuenta tanto hacia dónde debe desplazarse el robot como la orientación que debe ir adoptando.
 
----
+También aparecieron bucles al seleccionar el punto más cercano de la trayectoria. Al buscar puntos adelantados, en ocasiones el algoritmo volvía a seleccionar un punto anterior al que ya había alcanzado, haciendo que el robot entrase en un bucle. La solución fue obligar a que la selección de puntos se realizase siempre sobre índices superiores al último punto considerado, evitando así retroceder dentro de la trayectoria.
 
 ## 3. Segundo caso: el robot con su forma real, sin expandir
 
-Para que el planificador tenga en cuenta el tamaño y la forma del robot se utiliza una función de comprobación de colisiones, el **State Validity Checker** de OMPL.
+En el segundo caso cambio la forma de representar al robot. En lugar de tratarlo como un punto y expandir los obstáculos, utilizo su forma y dimensiones reales para comprobar las colisiones. Para ello utilizo el State Validity Checker de OMPL, que me permite definir cuándo una posición del espacio de estados es válida y cuándo no lo es.
 
-El planificador trabaja en un espacio de estados **SE2**: cada estado es la posición `(x, y)` y la orientación (`yaw`). En lugar de pasarle a OMPL una figura geométrica, compruebo si el robot puede ocupar cada posición que va generando el planificador:
+El planificador sigue trabajando en un espacio SE2, por lo que cada estado contiene la posición (x, y) y la orientación (yaw). Para comprobar si un estado es válido, defino una huella rectangular que representa al robot. Sus dimensiones cambian dependiendo de si está transportando una estantería o se encuentra libre.
 
-1. Defino una **huella rectangular** con las dimensiones del robot, que cambian según lleve estantería o no.
-2. A partir de la posición y la orientación calculo las **cuatro esquinas** del rectángulo y las paso de coordenadas del mundo a píxeles del mapa.
-3. Genero una **máscara** del rectángulo con `cv2.fillConvexPoly`.
-4. Compruebo si algún píxel de la máscara coincide con una zona ocupada.
+A partir de la posición y orientación del robot calculo las cuatro esquinas del rectángulo. Después transformo esas coordenadas del mundo a coordenadas de píxeles del mapa y genero una máscara que representa la superficie ocupada por el robot utilizando `cv2.fillConvexPoly`. Finalmente, compruebo si alguno de los píxeles de esa máscara coincide con una zona ocupada del mapa.
 
-Si alguna parte del rectángulo cae dentro de un obstáculo o fuera de los límites del mapa, la posición **no es válida**; en caso contrario, sí lo es. Así OMPL planifica con las dimensiones reales del robot en lugar de tratarlo como un punto.
+Si alguna parte del rectángulo se encuentra sobre un obstáculo o fuera de los límites del mapa, considero que ese estado no es válido. Si toda la superficie está libre, el estado sí puede utilizarse durante la planificación. De esta manera, OMPL tiene en cuenta tanto el tamaño como la orientación del robot a la hora de generar la trayectoria.
 
-Por último, reduzco el engorde de las paredes a **0**, porque ya no hace falta inflar el mapa.
-
----
+Al utilizar este sistema ya no necesito expandir los obstáculos para tener en cuenta las dimensiones del robot, por lo que reduzco el engorde de las paredes a cero. Así evito tener que modificar el mapa original y realizo directamente la comprobación de colisiones con la geometría real del robot.
 
 ## 4. Robot Ackermann
 
-Con un robot Ackermann cambia el espacio de estados: uso Dubins State Space. El problema es el giro, ya que un Ackermann no puede girar sobre sí mismo.
-
+Por último, para el robot Ackermann cambia el espacio de estados que utilizo. En este caso trabajo con Dubins State Space, ya que el robot tiene una limitación importante respecto al giro: no puede girar sobre sí mismo y necesita respetar un radio de giro mínimo.
 
 ### Marcha atrás
 
-El Ackermann puede retroceder, así que el planificador no se limita a caminos que solo van hacia delante. Usa un espacio de curvas que admite **los dos sentidos**, con el mismo radio de giro mínimo en ambos. Gracias a eso puede resolver situaciones que hacia delante serían imposibles o muy largas, como salir de un hueco estrecho o colocarse en la orientación justa para recoger una estantería sin dar una vuelta enorme.
+Sin embargo, el robot Ackermann también puede circular marcha atrás, por lo que no quiero limitar al planificador a generar trayectorias que únicamente permitan avanzar. Para ello utilizo un espacio de curvas que admite los dos sentidos de circulación, manteniendo el mismo radio de giro mínimo tanto hacia delante como hacia atrás.
 
-**Deducir el sentido de la marcha.** El camino que devuelve el planificador solo guarda posición y orientación en cada punto, no si el robot va hacia delante o hacia atrás. Ese sentido se deduce después: en cada paso se compara hacia dónde se desplaza el robot con hacia dónde mira.
+Esto permite resolver situaciones que, si únicamente pudiese avanzar, serían imposibles o requerirían recorridos mucho más largos. Por ejemplo, salir de un hueco estrecho o colocarse con la orientación adecuada para recoger una estantería sin tener que dar una vuelta completa.
 
-- Si el desplazamiento va en la misma dirección que la orientación, **avanza**.
-- Si va en la contraria, **retrocede**.
+El camino que devuelve el planificador contiene la posición y la orientación de cada punto, pero no indica directamente si el robot debe avanzar o retroceder. Por tanto, tengo que deducir el sentido de la marcha a partir del propio movimiento de la trayectoria. Para ello comparo la dirección en la que se desplaza el robot entre dos puntos consecutivos con la orientación que tiene en ese momento.
 
-**Tramos de sentido constante.** Con esa información se parte la trayectoria en tramos. Cada vez que el sentido cambia hay un **cambio de marcha**, y ese punto es el final de un tramo y el principio del siguiente.
+Si el desplazamiento coincide con la dirección hacia la que está orientado el robot, debe avanzar. Si, por el contrario, el desplazamiento se produce en la dirección opuesta, debe retroceder.
 
-**Seguimiento de cada tramo.** Se sigue con la misma idea de siempre: elegir un punto del camino un poco por delante y calcular el arco que lleva hasta él.
+Una vez calculado el sentido de circulación, divido la trayectoria en tramos en los que el robot mantiene siempre el mismo sentido. Cada vez que detecto un cambio entre avanzar y retroceder, considero que termina un tramo y comienza otro.
 
-- En un tramo de **marcha atrás** se hace el mismo cálculo imaginando que el robot mira hacia el lado contrario, y la **velocidad lineal enviada es negativa**.
-- La **velocidad angular** sale con el mismo cálculo, porque el giro del robot es el mismo mirado desde cualquiera de los dos lados.
+Para seguir cada uno de estos tramos utilizo una estrategia similar a la anterior: selecciono un punto algo más adelantado dentro de la trayectoria y calculo el arco necesario para llegar hasta él. La diferencia está en cómo interpreto ese punto dependiendo del sentido de circulación.
 
-**Cambios de marcha.** Al llegar al final de un tramo intermedio, el robot se detiene un momento, como haría un coche al cambiar de marcha, y empieza el siguiente tramo en el sentido contrario. Si es el último tramo, se comprueba que ha llegado a la posición y orientación del objetivo; si se ha pasado sin llegar, **se replanifica desde donde esté**.
+Cuando el robot tiene que retroceder, realizo el mismo cálculo que utilizaría para avanzar, pero considerando que el robot está mirando hacia el lado contrario. Además, envío una velocidad lineal negativa para indicar que debe desplazarse marcha atrás. La velocidad angular se calcula de la misma manera, ya que el giro necesario sigue siendo el mismo.
+
+Cuando llega al final de un tramo intermedio en el que tiene que cambiar de sentido, el robot se detiene durante un instante y comienza el siguiente tramo en el sentido contrario, de forma similar a lo que haría un coche al cambiar de marcha.
+
+Si se trata del último tramo, compruebo que el robot haya alcanzado tanto la posición como la orientación del objetivo. Si llega a sobrepasar el punto sin cumplir ambas condiciones, vuelvo a planificar desde su posición actual para obtener una nueva trayectoria.
