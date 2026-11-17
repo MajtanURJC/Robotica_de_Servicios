@@ -240,25 +240,8 @@ Por último, reduzco el engorde de las paredes a **0**, porque ya no hace falta 
 
 ## 4. Robot Ackermann
 
-Con un robot Ackermann cambia el espacio de estados: uso **Dubins State Space**. El problema es el giro, ya que un Ackermann **no puede girar sobre sí mismo**.
+Con un robot Ackermann cambia el espacio de estados: uso Dubins State Space. El problema es el giro, ya que un Ackermann no puede girar sobre sí mismo.
 
-Dubins necesita comprobar colisiones con un rectángulo orientado (**OBB**), así que implementé esa comprobación:
-
-```python
-"""
-Comprobacion de colision con un rectangulo orientado (OBB).
-
-El robot es un rectangulo de largo_robot x ancho_robot (mas el margen
-de seguridad) centrado en (x, y) y girado yaw + giro_huella. Cada pixel
-ocupado se trata como el cuadrado que realmente es (de lado 1 pixel,
-centrado en su indice) y se comprueba su solape exacto con el
-rectangulo mediante el teorema del eje separador (SAT).
-
-No se redondean las esquinas del rectangulo a pixeles ni se usa ninguna
-circunferencia, asi que no hay falsos positivos por exceso de
-conservadurismo ni falsos negativos por redondeo.
-"""
-```
 
 ### Marcha atrás
 
@@ -277,10 +260,3 @@ El Ackermann puede retroceder, así que el planificador no se limita a caminos q
 - La **velocidad angular** sale con el mismo cálculo, porque el giro del robot es el mismo mirado desde cualquiera de los dos lados.
 
 **Cambios de marcha.** Al llegar al final de un tramo intermedio, el robot se detiene un momento, como haría un coche al cambiar de marcha, y empieza el siguiente tramo en el sentido contrario. Si es el último tramo, se comprueba que ha llegado a la posición y orientación del objetivo; si se ha pasado sin llegar, **se replanifica desde donde esté**.
-
-## Conclusiones
-
-- Rehacer el mapa de ocupación en cada planificación es más simple y robusto que mantener varios mapas.
-- Darle al planner un **ángulo objetivo** evita giros innecesarios al llegar.
-- Un *State Validity Checker* con la huella real del robot permite planificar sin inflar obstáculos.
-- En Ackermann, Dubins + OBB + marcha atrás permiten maniobras que hacia delante serían inviables, a costa de gestionar los cambios de marcha.
