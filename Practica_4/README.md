@@ -188,6 +188,10 @@ El planificador utilizado es RRTConnect. Realizamos cinco intentos de planificac
 
 Una de las principales ventajas de este método es que resulta relativamente sencillo de implementar y permite tener en cuenta el tamaño del robot mediante la expansión de obstáculos. Sin embargo, tiene una limitación importante: la expansión es una aproximación de la geometría real. Al utilizar una expansión circular, no representa exactamente la forma rectangular de la estantería ni tiene en cuenta su orientación. Esto puede hacer que se bloqueen pasos por los que realmente podría pasar el robot o, dependiendo de la aproximación utilizada, que la representación no se ajuste completamente a su geometría.
 
+### VIDEO
+
+https://youtu.be/-Xi1o5X3_xc
+
 ### Caso 2: Robot con huella rectangular
 
 En este segundo caso mejoramos la representación del robot. En lugar de considerarlo un punto y expandir los obstáculos, utilizamos directamente su huella rectangular para comprobar si puede ocupar una determinada posición y orientación.
@@ -209,6 +213,10 @@ Para planificar seguimos utilizando RRTConnect, con cinco intentos de hasta 2 se
 La principal ventaja de este método es que representa de una forma más fiel la geometría del robot y de la estantería que transporta. Esto permite aprovechar mejor los espacios disponibles y comprobar si el robot puede atravesar zonas estrechas teniendo en cuenta su orientación. Sin embargo, también aumenta el coste computacional, porque en cada comprobación hay que calcular las esquinas del rectángulo, generar su máscara y comprobar los píxeles ocupados.
 
 En definitiva, el primer caso utiliza una aproximación más sencilla mediante la expansión de obstáculos, mientras que el segundo comprueba directamente la geometría rectangular del robot. El segundo método ofrece una representación más precisa, aunque requiere más cálculos durante la planificación.
+
+### VIDEO
+
+https://youtu.be/blhjDPClez0
 
 ## 4. Robot Ackermann
 
@@ -248,4 +256,26 @@ En definitiva, la parte más complicada del Ackermann no ha sido únicamente con
 
 Cuando llega al final de un tramo intermedio en el que tiene que cambiar de sentido, el robot se detiene durante un instante y comienza el siguiente tramo en el sentido contrario, de forma similar a lo que haría un coche al cambiar de marcha.
 
-Si se trata del último tramo, compruebo que el robot haya alcanzado tanto la posición como la orientación del objetivo. Si llega a sobrepasar el punto sin cumplir ambas condiciones, vuelvo a planificar desde su posición actual para obtener una nueva trayectoria.
+Si se trata del último tramo, compruebo que el robot haya alcanzado tanto la posición como la orientación del objetivo. Si llega a sobrepasar el punto sin cumplir ambas condiciones, vuelvo a planificar desde su posición actual para obtener una nueva trayectoria
+
+### VIDEO 
+
+https://youtu.be/Sw9CspkspCI
+
+### Diferencias entre SE2 y Reeds-Shepp
+
+Se han utilizado dos espacios de planificación diferentes para generar las trayectorias del robot:
+
+**SE2 (`SE2StateSpace`):**
+
+Este planificador trabaja con tres variables: posición X, posición Y y orientación (yaw). Sin embargo, no tiene en cuenta las restricciones cinemáticas de un vehículo Ackermann ni su radio mínimo de giro. Por tanto, puede generar trayectorias en las que la orientación del robot no sea coherente con la dirección de desplazamiento entre puntos consecutivos. Aunque las posiciones y orientaciones sean válidas geométricamente, la trayectoria puede resultar difícil de ejecutar por el robot.
+
+**Reeds-Shepp (`ReedsSheppStateSpace`):**
+
+Este planificador tiene en cuenta las restricciones cinemáticas de un vehículo Ackermann, incluyendo su radio mínimo de giro. Genera trayectorias formadas por tramos de avance y retroceso, cuyas orientaciones están relacionadas con el movimiento del vehículo. De esta forma, los cambios de orientación siguen curvas compatibles con las capacidades de giro del robot.
+
+**Diferencia principal:**
+
+Mientras que SE2 planifica posiciones y orientaciones sin imponer restricciones sobre cómo debe desplazarse el robot entre ellas, Reeds-Shepp genera trayectorias que respetan la geometría de movimiento de un vehículo Ackermann. Esto permite obtener recorridos más adecuados para su ejecución real, especialmente cuando es necesario realizar maniobras marcha atrás.
+
+
