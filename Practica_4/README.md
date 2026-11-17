@@ -6,8 +6,6 @@ En esta práctica hay que programar un robot de almacén que recoge estanterías
 2. El robot con su **forma real** (rectángulo), sin expandir los obstáculos.
 3. Un robot **Ackermann**, con restricciones de giro y marcha atrás.
 
----
-
 ## 1. Calibración
 
 Antes de planificar nada necesitaba saber cómo se mueve realmente el robot. Escribí un programa de calibración que recorre varios puntos, avanza una distancia fija, gira 90° y muestra la posición medida en cada parada. Así comparo lo que ordeno con lo que ocurre.
