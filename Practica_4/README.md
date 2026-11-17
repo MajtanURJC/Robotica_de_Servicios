@@ -1,4 +1,4 @@
-# Práctica 4: Amazon Warehouse. Planificar con OMPL y mover estanterías
+# Práctica 4: Amazon Warehouse.
 
 En esta práctica hay que programar un robot de almacén que recoge estanterías y las deja en otro sitio. Para ello se usa el planificador **OMPL**, que trabaja con posiciones `(x, y)` y orientaciones (`yaw`). Voy a repasar cómo lo he resuelto en tres escenarios, cada uno más realista que el anterior:
 
