@@ -281,8 +281,6 @@ El Ackermann puede retroceder, así que el planificador no se limita a caminos q
 
 **Cambios de marcha.** Al llegar al final de un tramo intermedio, el robot se detiene un momento, como haría un coche al cambiar de marcha, y empieza el siguiente tramo en el sentido contrario. Si es el último tramo, se comprueba que ha llegado a la posición y orientación del objetivo; si se ha pasado sin llegar, **se replanifica desde donde esté**.
 
----
-
 ## Conclusiones
 
 - Rehacer el mapa de ocupación en cada planificación es más simple y robusto que mantener varios mapas.
