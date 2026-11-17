@@ -166,6 +166,8 @@ Así queda el recorrido de calibración:
 
 https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 
+Una vez con los puntos los comparo en el gimp con el mapa y saco los pixels para la calibración.
+
 ![Calibración](https://github.com/user-attachments/assets/7b4985ba-1328-4650-bd19-85561b7e09b5)
 
 ---
