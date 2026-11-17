@@ -168,9 +168,6 @@ Así queda el recorrido de calibración:
 
 https://github.com/user-attachments/assets/dd037a1e-63e7-46b8-b337-020fba69b047
 
-
----
-
 ## 2. Primer caso: el robot como un punto (obstáculos expandidos)
 
 La estantería mide **2 metros de largo por 1 de ancho**.
