@@ -121,7 +121,3 @@ Por último, el robot se encarga de seguir los puntos que le proporciona el plan
 
 https://youtu.be/Sw9CspkspCI
 
-
-Mientras que SE2 planifica posiciones y orientaciones sin imponer restricciones sobre cómo debe desplazarse el robot entre ellas, Reeds-Shepp genera trayectorias que respetan la geometría de movimiento de un vehículo Ackermann. Esto permite obtener recorridos más adecuados para su ejecución real, especialmente cuando es necesario realizar maniobras marcha atrás.
-
-
