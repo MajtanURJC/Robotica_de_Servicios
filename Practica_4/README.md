@@ -46,7 +46,7 @@ La locomoción del robot es relativamente sencilla, ya que utilizamos un sistema
 
 Una de las principales ventajas de este método es que resulta relativamente sencillo de implementar y permite tener en cuenta el tamaño del robot mediante la expansión de obstáculos. Sin embargo, tiene una limitación importante: la expansión es una aproximación de la geometría real. Al utilizar una expansión circular, no representa exactamente la forma rectangular de la estantería ni tiene en cuenta su orientación. Esto puede hacer que se bloqueen pasos por los que realmente podría pasar el robot o que la representación no se ajuste completamente a su geometría.
 
-### VIDEO
+#### VIDEO
 
 https://youtu.be/-Xi1o5X3_xc
 
