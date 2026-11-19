@@ -12,7 +12,9 @@ Antes de planificar nada necesitaba saber cómo se mueve realmente el robot. Esc
 
 Este código se puede ver en el fichero de codigo_calibracion.
 
-Una vez tengo los puntos de referencia, los comparo con el mapa utilizando GIMP para obtener los píxeles correspondientes a cada coordenada. De esta forma puedo relacionar las coordenadas del mundo con las coordenadas de la imagen y obtener los datos necesarios para realizar la calibración. A partir de estos puntos calculo la transformación que permite pasar de un sistema de coordenadas a otro.
+Una vez tengo los puntos de referencia, los comparo con el mapa utilizando GIMP para obtener los píxeles correspondientes a cada coordenada. De esta forma puedo relacionar las coordenadas del mundo, expresadas en metros, con las coordenadas de la imagen, expresadas en píxeles, y obtener los datos necesarios para realizar la calibración.
+
+A partir de estas correspondencias, utilizo OpenCV para calcular una matriz de transformación afín mediante la función `cv2.estimateAffine2D`. Esta matriz permite convertir las coordenadas del mundo en píxeles, teniendo en cuenta la escala, el desplazamiento y la orientación del mapa. Además, calculo su matriz inversa para poder realizar también la conversión de píxeles a coordenadas del mundo cuando sea necesario.
 
 ![Calibración](https://github.com/user-attachments/assets/7b4985ba-1328-4650-bd19-85561b7e09b5)
 
