@@ -74,7 +74,7 @@ En resumen, el primer caso utiliza una aproximación más sencilla mediante la e
 
 Por último, cabe destacar que en estos dos casos he notado un cambio del coste computacional ocurriendo a veces que no era capaz de calcular el angulo y la ruta en RT y por lo tanto perdiendose a veces.
 
-### VIDEO
+#### VIDEO
 
 https://youtu.be/blhjDPClez0
 
@@ -117,7 +117,7 @@ Aun así, la falta de un tiempo de simulación controlado ha seguido siendo una 
 Cuando llega al final de un tramo intermedio en el que tiene que cambiar de sentido, el robot se detiene durante un instante y comienza el siguiente tramo en el sentido contrario, de forma similar a lo que haría un coche al cambiar de marcha.
 
 Por último, el robot se encarga de seguir los puntos que le proporciona el planificador, avanzando de uno a otro y ajustando su orientación para intentar mantenerse sobre la trayectoria calculada. En cada iteración comprueba cuál es el siguiente punto al que debe dirigirse y calcula el movimiento necesario para alcanzarlo. Este proceso se repite hasta recorrer todos los puntos de la trayectoria. Una vez que llega al último punto, se considera que el recorrido ha finalizado y el robot puede pasar a la siguiente tarea del programa.
-### VIDEO 
+#### VIDEO 
 
 https://youtu.be/Sw9CspkspCI
 
